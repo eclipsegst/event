@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc2"
+    buildToolsVersion "23.0.0 rc3"
 
     defaultConfig {
-        applicationId "co.znote.znote"
+        applicationId "com.example.android.znote"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

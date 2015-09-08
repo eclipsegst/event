@@ -1,4 +1,4 @@
-package co.znote.znote;
+package com.example.android.event;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
