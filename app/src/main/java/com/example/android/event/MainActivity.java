@@ -25,13 +25,6 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
-    Button btnStart, btnPause, btnEnd;
-    TextView textCounter;
-    private Chronometer mChronometer;
-
-    String startDatetime;
-    String endDatetime;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,23 +51,10 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 //        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        // Make this {@link Fragment} listen for changes in both FABs.
         FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab_1);
+        fab1.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
+
         fab1.setOnCheckedChangeListener(this);
-
-
-//        btnStart = (Button)findViewById(R.id.start);
-
-        mChronometer = (Chronometer) findViewById(R.id.chronometer);
-
-//        btnStart.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View arg0) {
-//                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
     }
 
     @Override

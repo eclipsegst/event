@@ -11,10 +11,10 @@
     </item>
 
     <item>
-        <ripple android:color="@color/fab_color_1_muted">
+        <ripple android:color="@color/teal_A200">
             <item>
                 <shape>
-                    <solid android:color="@color/fab_color_1" />
+                    <solid android:color="@color/teal" />
                 </shape>
             </item>
         </ripple>
