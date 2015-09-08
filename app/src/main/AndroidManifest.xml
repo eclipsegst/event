@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.znote" >
+    package="com.example.android.event" >
 
     <application
         android:allowBackup="true"
@@ -8,15 +8,21 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.android.event.MainActivity"
-            android:label="@string/app_name"
+            android:name=".MainActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".EventActivity"
+            android:label="@string/title_activity_event"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

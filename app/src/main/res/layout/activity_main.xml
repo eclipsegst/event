@@ -13,44 +13,45 @@
         android:layout_margin="16dp"
         android:layout_below="@+id/toolbar"/>
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/start_event"
-        android:layout_below="@+id/toolbar" />
-    <Button
-        android:id="@+id/pause"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pause"
-        android:layout_below="@id/start"/>
-    <Button
-        android:id="@+id/end"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/end"
-        android:layout_below="@id/pause"/>
-    <TextView
-        android:id="@+id/counter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:layout_below="@+id/end"/>
-
     <TextView
         android:id="@+id/duration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:layout_below="@+id/counter"/>
+        android:layout_below="@+id/toolbar" />
 
-    <Chronometer
-        android:layout_width="wrap_content"
+    
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/chronometer"
-        android:layout_below="@+id/duration"/>
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context=".MainActivity"
+        android:layout_alignParentStart="true">
+
+        <com.example.android.event.FloatingActionButton
+            android:id="@+id/fab_1"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:elevation="@dimen/fab_elevation"
+            android:background="@drawable/fab_background"
+            android:stateListAnimator="@animator/fab_anim"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:layout_width="@dimen/fab_icon_size"
+                android:layout_height="@dimen/fab_icon_size"
+                android:src="@drawable/fab_icons"
+                android:layout_gravity="center"
+                android:duplicateParentState="true"/>
+
+        </com.example.android.event.FloatingActionButton>
+
+    </RelativeLayout>
 
 </RelativeLayout>

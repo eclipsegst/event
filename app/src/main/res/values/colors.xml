@@ -60,6 +60,11 @@
     <item name="dark_blue_grey" type="color">#263238</item>
 
 
+    <!--Floating action button-->
+    <color name="fab_color_1">#ff5252</color>
+    <color name="fab_color_1_muted">#ff8080</color>
+    <color name="fab_color_2">#9c27b0</color>
+    <color name="fab_color_2_muted">#a56ab0</color>
 
     <!--<integer-array name="androidcolors">-->
         <!--<item>@color/blue</item>-->

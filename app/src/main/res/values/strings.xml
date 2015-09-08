@@ -3,9 +3,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="welcome_to_event">welcome to event!</string>
     <string name="event">event</string>
+    <string name="event_subject">new event</string>
     <string name="action_settings">settings</string>
     <string name="start">start</string>
     <string name="pause">pause</string>
     <string name="end">end</string>
     <string name="start_event">start event</string>
+    <string name="title_activity_event">EventActivity</string>
 </resources>

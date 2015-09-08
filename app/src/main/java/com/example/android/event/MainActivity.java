@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
-import com.example.android.znote.R;
+import com.example.android.event.R;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +21,9 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnCheckedChangeListener {
+
+    private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
     Button btnStart, btnPause, btnEnd;
     TextView textCounter;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         // setTheme(R.style.MyRandomTheme);
 
         // Return 0 to 17 random number
@@ -47,43 +51,45 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setNavigationBarColor(getResources().getColor(STATUS_BAR_COLOR.get(randomNumber)));
         }
 
-        setContentView(R.layout.activity_main);
-
-        btnStart = (Button)findViewById(R.id.start);
-        btnPause = (Button) findViewById(R.id.pause);
-        btnEnd = (Button) findViewById(R.id.end);
-        textCounter = (TextView)findViewById(R.id.counter);
-        mChronometer = (Chronometer) findViewById(R.id.chronometer);
-
-        btnStart.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-
-            }
-        });
-
-        btnPause.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-
-            }
-        });
-
-        btnEnd.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-            }
-
-        });
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
 //        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
 //        mTitle.setText("event");
 //        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+        // Make this {@link Fragment} listen for changes in both FABs.
+        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab_1);
+        fab1.setOnCheckedChangeListener(this);
+
+
+//        btnStart = (Button)findViewById(R.id.start);
+
+        mChronometer = (Chronometer) findViewById(R.id.chronometer);
+
+//        btnStart.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View arg0) {
+//                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+    }
+
+    @Override
+    public void onCheckedChanged(FloatingActionButton fabView, boolean isChecked) {
+        // When a FAB is toggled, log the action.
+        switch (fabView.getId()){
+            case R.id.fab_1:
+                Log.d(LOG_TAG, String.format("FAB 1 was %s.", isChecked ? "checked" : "unchecked"));
+                Intent intent = new Intent(this, EventActivity.class);
+                startActivity(intent);
+                break;
+
+            default:
+                break;
+        }
     }
 
 
