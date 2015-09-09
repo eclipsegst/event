@@ -44,12 +44,10 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
             getWindow().setNavigationBarColor(getResources().getColor(STATUS_BAR_COLOR.get(randomNumber)));
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
-//        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-//        mTitle.setText("event");
-//        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
+        mToolbar.setTitle("notabene");
+        setSupportActionBar(mToolbar);
 
         FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab_1);
         fab1.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));

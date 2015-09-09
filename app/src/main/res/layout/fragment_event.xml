@@ -5,18 +5,17 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.android.event.EventActivityFragment">
 
-    <include layout="@layout/toolbar_main"
-        android:id="@+id/include" />
+    <!--<include layout="@layout/toolbar_main"-->
+        <!--android:id="@+id/include" />-->
 
     <TextView
         android:id="@+id/event_subject"
         android:text="@string/event_subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp" />
-
+        android:layout_marginTop="43dp"
+        android:textSize="38dp"/>
 
     <com.example.android.event.PausableChronometer
         android:id="@+id/chronometer"
@@ -24,39 +23,95 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/event_subject"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="71dp" />
+        android:layout_marginTop="71dp"
+        android:textSize="38dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="start"
-        android:id="@+id/button_start"
-        android:layout_below="@+id/include"
-        android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="pause"
-        android:id="@+id/button_pause"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/latitude_text"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/longitude_text"
+            android:layout_below="@+id/latitude_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp" />
+
+    </RelativeLayout>
+
+    <com.example.android.event.FloatingActionButton
+        android:id="@+id/fab_start"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:elevation="@dimen/fab_elevation"
+        android:background="@drawable/fab_background"
+        android:stateListAnimator="@animator/fab_anim"
+        android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="resume"
-        android:id="@+id/button_resume"
+        <ImageView
+            android:layout_width="@dimen/fab_icon_size"
+            android:layout_height="@dimen/fab_icon_size"
+            android:src="@drawable/fab_start"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"/>
+
+    </com.example.android.event.FloatingActionButton>
+
+    <com.example.android.event.FloatingActionButton
+        android:id="@+id/fab_pause"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:elevation="@dimen/fab_elevation"
+        android:background="@drawable/fab_background"
+        android:stateListAnimator="@animator/fab_anim"
+        android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="end"
-        android:id="@+id/button_stop"
+        <ImageView
+            android:layout_width="@dimen/fab_icon_size"
+            android:layout_height="@dimen/fab_icon_size"
+            android:src="@drawable/fab_pause"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"/>
+
+    </com.example.android.event.FloatingActionButton>
+
+    <com.example.android.event.FloatingActionButton
+        android:id="@+id/fab_end"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:elevation="@dimen/fab_elevation"
+        android:background="@drawable/fab_background"
+        android:stateListAnimator="@animator/fab_anim"
+        android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true">
 
+        <ImageView
+            android:layout_width="@dimen/fab_icon_size"
+            android:layout_height="@dimen/fab_icon_size"
+            android:src="@drawable/fab_end"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"/>
+
+    </com.example.android.event.FloatingActionButton>
 
 </RelativeLayout>
