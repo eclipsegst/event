@@ -31,6 +31,12 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
+
+        <provider
+            android:authorities="com.example.android.event"
+            android:name=".data.NotaProvider"
+            android:exported="false"
+            android:syncable="true" />
     </application>
 
 </manifest>

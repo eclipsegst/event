@@ -5,14 +5,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
+import java.util.HashSet;
+
 import com.example.android.event.data.NotaContract.CategoryEntry;
 import com.example.android.event.data.NotaContract.NotaEntry;
-
-import java.util.HashSet;
 
 public class TestDb extends AndroidTestCase {
 
     public static final String LOG_TAG = TestDb.class.getSimpleName();
+    public static String zhao = "zhao: ";
 
     // Start with a clean slate
     void deleteTheDatabase() {
@@ -51,7 +52,7 @@ public class TestDb extends AndroidTestCase {
             tableNameHashSet.remove(cTable.getString(0));
         } while( cTable.moveToNext());
 
-        assertTrue("Error: The database was created without both the category and nota tables",
+        assertTrue("Error: The database was created without both the category and nota tables.",
                 tableNameHashSet.isEmpty());
 
         // verify if the columns have been created correctly
@@ -59,11 +60,6 @@ public class TestDb extends AndroidTestCase {
                 null);
         assertTrue("Error: We were unable to query the database for 'category' table information.",
                 cColumnCategory.moveToFirst());
-
-        Cursor cColumnNota = db.rawQuery("PRAGMA table_info(" + NotaContract.CategoryEntry.TABLE_NAME + ")",
-                null);
-        assertTrue("Error: We were unable to query the database for 'nota' table information.",
-                cColumnNota.moveToFirst());
 
         final HashSet<String> categoryColumnHashSet = new HashSet<String>();
         categoryColumnHashSet.add(CategoryEntry._ID);
@@ -75,12 +71,19 @@ public class TestDb extends AndroidTestCase {
             String columnName = cColumnCategory.getString(columnNameIndexCategory);
             categoryColumnHashSet.remove(columnName);
         } while(cColumnCategory.moveToNext());
-        assertTrue("Error: The database doesn't contain all of the required category entry columns",
+
+        assertTrue("Error: The database doesn't contain all of the required category entry columns." + zhao,
                 categoryColumnHashSet.isEmpty());
+        // nota
+        Cursor cColumnNota = db.rawQuery("PRAGMA table_info(" + NotaContract.NotaEntry.TABLE_NAME + ")",
+                null);
+        assertTrue("Error: We were unable to query the database for 'nota' table information.",
+                cColumnNota.moveToFirst());
 
         final HashSet<String> notaColumnHashSet = new HashSet<String>();
         notaColumnHashSet.add(NotaEntry._ID);
         notaColumnHashSet.add(NotaEntry.COLUMN_CAT_KEY);
+        notaColumnHashSet.add(NotaEntry.COLUMN_SUBJECT);
         notaColumnHashSet.add(NotaEntry.COLUMN_NOTE);
         notaColumnHashSet.add(NotaEntry.COLUMN_START);
         notaColumnHashSet.add(NotaEntry.COLUMN_END);
@@ -93,7 +96,8 @@ public class TestDb extends AndroidTestCase {
             String columnName = cColumnNota.getString(columnNameIndexNota);
             notaColumnHashSet.remove(columnName);
         } while(cColumnNota.moveToNext());
-        assertTrue("Error: The database doesn't contain all of the required nota entry columns",
+
+        assertTrue("Error: The database doesn't contain all of the required nota entry columns." + zhao,
                 notaColumnHashSet.isEmpty());
 
         db.close();
