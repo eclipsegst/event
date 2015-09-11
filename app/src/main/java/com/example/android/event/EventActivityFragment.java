@@ -1,5 +1,10 @@
 package com.example.android.event;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +18,10 @@ import java.util.Calendar;
 import android.location.Location;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.android.event.data.NotaContract;
+import com.example.android.event.data.NotaDbHelper;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.location.LocationServices;
@@ -28,27 +37,19 @@ public class EventActivityFragment extends Fragment implements
 
     private String LOG_TAG = this.getClass().getSimpleName();
 
-    private Toolbar mToolbar;
     private PausableChronometer mChronometer;
     private long mStartTime;
     private long mEndTime;
+    private long mDuration;
 
     private FloatingActionButton mFabStart;
     private FloatingActionButton mFabPause;
     private FloatingActionButton mFabEnd;
 
-    protected static final String ADDRESS_REQUESTED_KEY = "address-request-pending";
-    protected static final String LOCATION_ADDRESS_KEY = "location-address";
-
-    // Nested class
-//    private AddressResultReceiver mResultReceiver;
     protected GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
     protected TextView mLatTextView;
     protected TextView mLonTextView;
-    protected TextView mAddressTextview;
-
-    Button mFetchAddressButtons;
 
     public EventActivityFragment() {
     }
@@ -57,18 +58,14 @@ public class EventActivityFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
+        // inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_event, container, false);
-
-//        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-//        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
         mChronometer = (PausableChronometer) rootView.findViewById(R.id.chronometer);
 
         mFabStart = (FloatingActionButton) rootView.findViewById(R.id.fab_start);
         mFabPause = (FloatingActionButton) rootView.findViewById(R.id.fab_pause);
         mFabEnd = (FloatingActionButton) rootView.findViewById(R.id.fab_end);
-//        fab1.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
 
         mFabStart.setOnCheckedChangeListener(this);
         mFabPause.setOnCheckedChangeListener(this);
@@ -78,11 +75,11 @@ public class EventActivityFragment extends Fragment implements
         mFabPause.setVisibility(View.VISIBLE);
         mFabEnd.setVisibility(View.GONE);
 
-
-        // Start the chronometer when launching the activity
+        // start the chronometer when launching the activity
         mChronometer.start();
         Calendar c = Calendar.getInstance();
         int seconds = c.get(Calendar.SECOND);
+        mStartTime = System.currentTimeMillis();
         Log.d(LOG_TAG, "start time: " + System.currentTimeMillis());
         System.out.println(getDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
 
@@ -134,7 +131,7 @@ public class EventActivityFragment extends Fragment implements
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        // Gets the best and most recent location currently available, which may be null
+        // gets the best and most recent location currently available, which may be null
         // in rare cases when a location is not available.
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         Log.d(LOG_TAG, "onConnected");
@@ -148,16 +145,14 @@ public class EventActivityFragment extends Fragment implements
 
     }
 
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        mToolbar.setTitle("ongoing");
     }
 
     @Override
     public void onCheckedChanged(FloatingActionButton fabView, boolean isChecked) {
-        // When a FAB is toggled, log the action.
+        // when a FAB is toggled, log the action.
         switch (fabView.getId()){
             case R.id.fab_start:
                 Log.d(LOG_TAG, String.format("FAB start was %s.", isChecked ? "checked" : "unchecked"));
@@ -167,7 +162,6 @@ public class EventActivityFragment extends Fragment implements
                 mFabEnd.setVisibility(View.GONE);
 
                 mChronometer.start();
-
 
                 break;
             case R.id.fab_pause:
@@ -182,13 +176,39 @@ public class EventActivityFragment extends Fragment implements
                 break;
             case R.id.fab_end:
                 Log.d(LOG_TAG, String.format("FAB end was %s.", isChecked ? "checked" : "unchecked"));
-//                Intent intent = new Intent(this, EventActivity.class);
-//                startActivity(intent);
+
+                mEndTime = System.currentTimeMillis();
+                mDuration = mChronometer.getCurrentTime();
                 mChronometer.stop();
-                Calendar c = Calendar.getInstance();
-                int seconds = c.get(Calendar.SECOND);
-                Log.d(LOG_TAG, "end time: " + System.currentTimeMillis());
+
+                Log.d(LOG_TAG, "start time: " + mStartTime);
+                Log.d(LOG_TAG, "end time: " + mEndTime);
+                Log.d(LOG_TAG, "duration: " + mDuration);
+
                 System.out.println(getDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
+
+                long categoryRowId = -1;
+                categoryRowId = getCategoryDefaultRowId(getActivity());
+
+                ContentValues newNotaValues = new ContentValues();
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_CAT_KEY, categoryRowId);
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_SUBJECT, "default subject");
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_NOTE, "default note");
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_START, mStartTime);
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_END, mEndTime);
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_DURATION, mChronometer.getCurrentTime());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_LAT, mLastLocation.getLatitude());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_LON, mLastLocation.getLongitude());
+
+                long notaRowId = -1;
+
+                notaRowId = insertNewNota(getActivity().getApplicationContext(), newNotaValues);
+                Log.d(LOG_TAG, "notaRowId: " + notaRowId);
+
+                Intent intent = new Intent(getActivity(), NotaActivity.class);
+                intent.putExtra("notaRowId", notaRowId);
+                startActivity(intent);
+
                 break;
 
             default:
@@ -212,5 +232,67 @@ public class EventActivityFragment extends Fragment implements
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
+    }
+
+    static ContentValues createNotaValues(long categoryRowId) {
+
+        ContentValues testValuesNota = new ContentValues();
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_CAT_KEY, categoryRowId);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_SUBJECT, "running");
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_NOTE, "I'm feeling good!");
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_START, 1441822024L);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_END, 1441822024L);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_DURATION, 365);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_LAT, 38.9338);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_LON, -92.3183);
+
+        return testValuesNota;
+    }
+
+    private long insertNewNota(Context context, ContentValues contentValues) {
+        NotaDbHelper dbHelper = new NotaDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        long notaRowId = -1;
+        notaRowId = db.insert(NotaContract.NotaEntry.TABLE_NAME, null, contentValues);
+
+        return notaRowId;
+    }
+
+    private long getCategoryDefaultRowId(Context context) {
+        NotaDbHelper dbHelper = new NotaDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        Cursor cursorCategory = context.getContentResolver().query(
+                NotaContract.CategoryEntry.CONTENT_URI,
+                null, // leaving "columns" null just returns all the columns
+                NotaContract.CategoryEntry.COLUMN_NAME + " = " + "'default'", // columns for "where" clause
+                null, // values for "where" clause
+                null  // sort order
+        );
+
+        long categoryRowId = -1;
+
+        if (cursorCategory.moveToFirst()) {
+            // get the default category row id
+            int columnNameIndex = cursorCategory.getColumnIndex(NotaContract.CategoryEntry._ID);
+            categoryRowId = cursorCategory.getLong(columnNameIndex);
+            Log.d(LOG_TAG, "We have a default category with row id: " + categoryRowId);
+        } else {
+            // create default category
+            ContentValues testValuesCategory = createCategoryValues();
+            categoryRowId = db.insert(NotaContract.CategoryEntry.TABLE_NAME, null, testValuesCategory);
+            Log.d(LOG_TAG, "We don't have a default category. So we create the default category with row id: " + categoryRowId);
+        }
+        return categoryRowId;
+    }
+
+    private ContentValues createCategoryValues() {
+
+        ContentValues testValuesCategory = new ContentValues();
+        testValuesCategory.put(NotaContract.CategoryEntry.COLUMN_NAME, "default");
+        testValuesCategory.put(NotaContract.CategoryEntry.COLUMN_TOTAL_TIME, 0);
+
+        return testValuesCategory;
     }
 }

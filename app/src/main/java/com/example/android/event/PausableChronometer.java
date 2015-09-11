@@ -39,8 +39,8 @@ public class PausableChronometer extends Chronometer {
         timeWhenStopped = 0;
     }
 
-    public long getCurrentTime() {
-        return timeWhenStopped;
+    public int getCurrentTime() {
+        return Math.abs((int)timeWhenStopped/1000);
     }
 
     public void setCurrentTime(long time) {
