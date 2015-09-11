@@ -170,7 +170,7 @@ public class NotaProvider extends ContentProvider {
             case CATEGORY:
             {
                 retCursor = mOpenHelper.getReadableDatabase().query(
-                        NotaEntry.TABLE_NAME,
+                        CategoryEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
