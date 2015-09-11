@@ -1,6 +1,5 @@
 package com.example.android.event;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.TextView;
-
-import com.example.android.event.R;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +14,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity implements FloatingActionButton.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -32,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
         // setTheme(R.style.MyRandomTheme);
 
         // Return 0 to 17 random number
-
         int randomNumber = randInt(0, 17);
 
         // Set status bar and navigation bar color
@@ -46,30 +38,13 @@ public class MainActivity extends AppCompatActivity implements FloatingActionBut
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
-        mToolbar.setTitle("notabene");
+        mToolbar.setTitle("nota");
         setSupportActionBar(mToolbar);
 
-        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab_1);
-        fab1.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
+        FloatingActionButton nFabNew = (FloatingActionButton) findViewById(R.id.fab_new);
+        nFabNew.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
 
-        fab1.setOnCheckedChangeListener(this);
     }
-
-    @Override
-    public void onCheckedChanged(FloatingActionButton fabView, boolean isChecked) {
-        // When a FAB is toggled, log the action.
-        switch (fabView.getId()){
-            case R.id.fab_1:
-                Log.d(LOG_TAG, String.format("FAB 1 was %s.", isChecked ? "checked" : "unchecked"));
-                Intent intent = new Intent(this, EventActivity.class);
-                startActivity(intent);
-                break;
-
-            default:
-                break;
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
