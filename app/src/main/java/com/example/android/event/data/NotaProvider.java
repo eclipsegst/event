@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.android.event.data.NotaContract.CategoryEntry;
 import com.example.android.event.data.NotaContract.NotaEntry;
@@ -60,12 +61,14 @@ public class NotaProvider extends ContentProvider {
         String category = NotaEntry.getCategoryFromUri(uri);
         long startDate = NotaEntry.getStartDateFromUri(uri);
 
-        String[] selectionArgs;
-        String selection;
+        String[] selectionArgs = null;
+        String selection = null;
 
         if (startDate == 0) {
-            selection = sCategorySelection;
-            selectionArgs = new String[] {category};
+            if (!category.equals("null")) {
+                selection = sCategorySelection;
+                selectionArgs = new String[]{category};
+            }
         } else {
             selection = sCategoryWithStartDateSelection;
             selectionArgs = new String[] {category, Long.toString(startDate)};

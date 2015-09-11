@@ -7,18 +7,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import android.location.Location;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.event.data.NotaContract;
 import com.example.android.event.data.NotaDbHelper;
@@ -81,7 +77,7 @@ public class EventActivityFragment extends Fragment implements
         int seconds = c.get(Calendar.SECOND);
         mStartTime = System.currentTimeMillis();
         Log.d(LOG_TAG, "start time: " + System.currentTimeMillis());
-        System.out.println(getDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
+        System.out.println(Utilities.getReadableDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
 
         mLatTextView = (TextView) rootView.findViewById(R.id.latitude_text);
         mLonTextView = (TextView) rootView.findViewById(R.id.longitude_text);
@@ -185,7 +181,7 @@ public class EventActivityFragment extends Fragment implements
                 Log.d(LOG_TAG, "end time: " + mEndTime);
                 Log.d(LOG_TAG, "duration: " + mDuration);
 
-                System.out.println(getDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
+                System.out.println(Utilities.getReadableDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
 
                 long categoryRowId = -1;
                 categoryRowId = getCategoryDefaultRowId(getActivity());
@@ -214,39 +210,6 @@ public class EventActivityFragment extends Fragment implements
             default:
                 break;
         }
-    }
-
-
-    /**
-     * Return date in specified format.
-     * @param milliSeconds Date in milliseconds
-     * @param dateFormat Date format
-     * @return String representing date in specified format
-     */
-    public static String getDate(long milliSeconds, String dateFormat)
-    {
-        // Create a DateFormatter object for displaying date in specified format.
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
-
-        // Create a calendar object that will convert the date and time value in milliseconds to date.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliSeconds);
-        return formatter.format(calendar.getTime());
-    }
-
-    static ContentValues createNotaValues(long categoryRowId) {
-
-        ContentValues testValuesNota = new ContentValues();
-        testValuesNota.put(NotaContract.NotaEntry.COLUMN_CAT_KEY, categoryRowId);
-        testValuesNota.put(NotaContract.NotaEntry.COLUMN_SUBJECT, "running");
-        testValuesNota.put(NotaContract.NotaEntry.COLUMN_NOTE, "I'm feeling good!");
-        testValuesNota.put(NotaContract.NotaEntry.COLUMN_START, 1441822024L);
-        testValuesNota.put(NotaContract.NotaEntry.COLUMN_END, 1441822024L);
-        testValuesNota.put(NotaContract.NotaEntry.COLUMN_DURATION, 365);
-        testValuesNota.put(NotaContract.NotaEntry.COLUMN_LAT, 38.9338);
-        testValuesNota.put(NotaContract.NotaEntry.COLUMN_LON, -92.3183);
-
-        return testValuesNota;
     }
 
     private long insertNewNota(Context context, ContentValues contentValues) {
@@ -287,6 +250,9 @@ public class EventActivityFragment extends Fragment implements
         return categoryRowId;
     }
 
+    /**
+     * @return ContentValues representing the default category
+     */
     private ContentValues createCategoryValues() {
 
         ContentValues testValuesCategory = new ContentValues();
