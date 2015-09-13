@@ -52,12 +52,12 @@ public class NotaAdapter extends CursorAdapter {
 
         // read start date from cursor
         long startDate = cursor.getLong(MainActivityFragment.COL_START);
-        String start = Utilities.getReadableDate(startDate, "dd/MM/yy HH:mm");
+        String start = utilities.getReadableDate(startDate, "dd/MM/yy HH:mm");
         viewHolder.mStartTimeView.setText(start);
 
         // read duration from cursor
         long duration = cursor.getLong(MainActivityFragment.COL_DURATION);
-        viewHolder.mDurationView.setText("" + Utilities.formatDuration(duration));
+        viewHolder.mDurationView.setText("" + utilities.formatDuration(duration));
         // read category from cursor
         String category = cursor.getString(MainActivityFragment.COL_CATEGORY_NAME);
         viewHolder.mCategoryView.setText(category);

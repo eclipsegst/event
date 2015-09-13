@@ -159,7 +159,14 @@ public class NotaProvider extends ContentProvider {
             case NOTA:
             {
                 retCursor = mOpenHelper.getReadableDatabase().query(
-                        NotaEntry.TABLE_NAME,
+                        // we are trying to get the category name to use inner join or
+                        // we can just use NotaEntry.TABLE_NAME
+                        NotaEntry.TABLE_NAME + " INNER JOIN " +
+                                CategoryEntry.TABLE_NAME +
+                                " ON " + NotaEntry.TABLE_NAME +
+                                "." + NotaEntry.COLUMN_CAT_KEY +
+                                " = " + CategoryEntry.TABLE_NAME +
+                                "." + CategoryEntry._ID,
                         projection,
                         selection,
                         selectionArgs,

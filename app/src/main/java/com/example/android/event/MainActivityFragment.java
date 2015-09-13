@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.event.data.NotaContract.CategoryEntry;
@@ -23,7 +24,7 @@ public class MainActivityFragment extends Fragment implements
 
     private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
 
-    private NotaAdapter mNotaAdapter;
+    public static NotaAdapter mNotaAdapter;
     private ListView mListView;
 
     private FloatingActionButton mFabNew;
@@ -68,11 +69,26 @@ public class MainActivityFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         mNotaAdapter = new NotaAdapter(getActivity(), null, 0);
+//        mNotaAdapter = new NotaAdapter(getActivity(), new NotaAdapter.)
         mListView = (ListView) rootView.findViewById(R.id.listview_nota);
         mListView.setAdapter(mNotaAdapter);
 
         mFabNew = (FloatingActionButton)rootView.findViewById(R.id.fab_new);
         mFabNew.setOnCheckedChangeListener(this);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+                if (cursor != null) {
+                    long notaRowId = cursor.getLong(COL_NOTA_ID);
+                    Intent intent = new Intent(getActivity(), NotaActivity.class);
+                    intent.putExtra("notaRowId", notaRowId);
+                    startActivity(intent);
+                }
+            }
+        });
+
 
 
         return rootView;
@@ -104,7 +120,7 @@ public class MainActivityFragment extends Fragment implements
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
         Log.d(LOG_TAG, "onCreateLoader");
-        String sortOrder = NotaEntry.COLUMN_START + " ASC";
+        String sortOrder = NotaEntry.COLUMN_START + " DESC";
         // if category is set to null, we just ignore category
         Uri notaUri = NotaEntry.buildNotaCategory(null);
 

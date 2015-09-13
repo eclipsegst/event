@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,6 +16,8 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
+    private int mToolbarColor;
+    private int mStatusBarColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,25 +25,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // setTheme(R.style.MyRandomTheme);
 
-        // Return 0 to 17 random number
-        int randomNumber = randInt(0, 17);
+        mToolbarColor = ((Constants) getApplication()).getToolbarColor();
+        mStatusBarColor = ((Constants) getApplication()).getStatusBarColor();
+
+        if (mToolbarColor == -1) {
+            int randomNumber = randInt(0, TOOLBAR_COLOR.size());
+
+            mToolbarColor = ((Constants) getApplication()).TOOLBAR_COLOR.get(randomNumber);
+            mStatusBarColor = ((Constants) getApplication()).STATUS_BAR_COLOR.get(randomNumber);
+            ((Constants) getApplication()).setToolbarColor(mToolbarColor);
+            ((Constants) getApplication()).setStatusBarColor(mStatusBarColor);
+        }
 
         // Set status bar and navigation bar color
         if (Build.VERSION.SDK_INT >= 21) {
             // Top status bar
-            getWindow().setStatusBarColor(getResources().getColor(STATUS_BAR_COLOR.get(randomNumber)));
+            getWindow().setStatusBarColor(getResources().getColor(mStatusBarColor));
 
             // Bottom navigation bar
-            getWindow().setNavigationBarColor(getResources().getColor(STATUS_BAR_COLOR.get(randomNumber)));
+            getWindow().setNavigationBarColor(getResources().getColor(mStatusBarColor));
         }
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
+        mToolbar.setBackgroundColor(getResources().getColor(mToolbarColor));
         mToolbar.setTitle("nota");
         setSupportActionBar(mToolbar);
 
         FloatingActionButton nFabNew = (FloatingActionButton) findViewById(R.id.fab_new);
-        nFabNew.setBackgroundColor(getResources().getColor(TOOLBAR_COLOR.get(randomNumber)));
+        nFabNew.setBackgroundColor(getResources().getColor(mToolbarColor));
 
     }
 

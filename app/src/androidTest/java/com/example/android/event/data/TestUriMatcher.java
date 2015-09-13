@@ -9,6 +9,7 @@ public class TestUriMatcher extends AndroidTestCase{
     private static final String CATEGORY_QUERY = "work out";
     private static final long TEST_DATE = 1441822024L;
     private static final long TEST_CATEGORY_ID = 10L;
+    private static final long TEST_NOTA_ID = 10L;
 
     // content://com.example.android.event/nota
     private static final Uri TEST_NOTA_DIR = NotaContract.NotaEntry.CONTENT_URI;

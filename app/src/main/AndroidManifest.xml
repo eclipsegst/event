@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".Constants"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -39,7 +40,9 @@
 
         <activity
             android:name=".NotaActivity"
-            android:label="@string/title_activity_nota" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_nota"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

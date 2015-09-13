@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by zz on 9/11/15.
  */
-public class Utilities {
+public class utilities {
 
     /**
      * Return date in specified format.
@@ -26,6 +26,17 @@ public class Utilities {
         return formatter.format(calendar.getTime());
     }
 
+    public static String getReadableDate(long milliSeconds)
+    {
+        // Create a DateFormatter object for displaying date in specified format.
+        String dateFormat = "dd/MM/yy HH:mm";
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
+    }
     public static String formatDuration(long duration) {
         String res = "";
 

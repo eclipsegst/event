@@ -41,6 +41,7 @@ public class EventActivityFragment extends Fragment implements
     private FloatingActionButton mFabStart;
     private FloatingActionButton mFabPause;
     private FloatingActionButton mFabEnd;
+    private int mToolbarColor;
 
     protected GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
@@ -62,6 +63,11 @@ public class EventActivityFragment extends Fragment implements
         mFabStart = (FloatingActionButton) rootView.findViewById(R.id.fab_start);
         mFabPause = (FloatingActionButton) rootView.findViewById(R.id.fab_pause);
         mFabEnd = (FloatingActionButton) rootView.findViewById(R.id.fab_end);
+        mToolbarColor = ((Constants) this.getActivity().getApplication()).getToolbarColor();
+
+        mFabStart.setBackgroundColor(getResources().getColor(mToolbarColor));
+        mFabPause.setBackgroundColor(getResources().getColor(mToolbarColor));
+        mFabEnd.setBackgroundColor(getResources().getColor(mToolbarColor));
 
         mFabStart.setOnCheckedChangeListener(this);
         mFabPause.setOnCheckedChangeListener(this);
@@ -77,7 +83,7 @@ public class EventActivityFragment extends Fragment implements
         int seconds = c.get(Calendar.SECOND);
         mStartTime = System.currentTimeMillis();
         Log.d(LOG_TAG, "start time: " + System.currentTimeMillis());
-        System.out.println(Utilities.getReadableDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
+        System.out.println(utilities.getReadableDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
 
         mLatTextView = (TextView) rootView.findViewById(R.id.latitude_text);
         mLonTextView = (TextView) rootView.findViewById(R.id.longitude_text);
@@ -168,20 +174,18 @@ public class EventActivityFragment extends Fragment implements
                 mFabEnd.setVisibility(View.VISIBLE);
 
                 mChronometer.stop();
-
+                mDuration = mChronometer.getCurrentTime();
                 break;
             case R.id.fab_end:
                 Log.d(LOG_TAG, String.format("FAB end was %s.", isChecked ? "checked" : "unchecked"));
 
                 mEndTime = System.currentTimeMillis();
-                mDuration = mChronometer.getCurrentTime();
-                mChronometer.stop();
 
                 Log.d(LOG_TAG, "start time: " + mStartTime);
                 Log.d(LOG_TAG, "end time: " + mEndTime);
                 Log.d(LOG_TAG, "duration: " + mDuration);
 
-                System.out.println(Utilities.getReadableDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
+                System.out.println(utilities.getReadableDate(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss.SSS"));
 
                 long categoryRowId = -1;
                 categoryRowId = getCategoryDefaultRowId(getActivity());
@@ -192,7 +196,7 @@ public class EventActivityFragment extends Fragment implements
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_NOTE, "default note");
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_START, mStartTime);
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_END, mEndTime);
-                newNotaValues.put(NotaContract.NotaEntry.COLUMN_DURATION, mChronometer.getCurrentTime());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_DURATION, mDuration);
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_LAT, mLastLocation.getLatitude());
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_LON, mLastLocation.getLongitude());
 
@@ -200,7 +204,7 @@ public class EventActivityFragment extends Fragment implements
 
                 notaRowId = insertNewNota(getActivity().getApplicationContext(), newNotaValues);
                 Log.d(LOG_TAG, "notaRowId: " + notaRowId);
-
+//                MainActivityFragment.mNotaAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(getActivity(), NotaActivity.class);
                 intent.putExtra("notaRowId", notaRowId);
                 startActivity(intent);
