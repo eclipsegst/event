@@ -5,10 +5,23 @@
     <string name="event">event</string>
     <string name="event_subject">new nota</string>
     <string name="action_settings">settings</string>
+    <string name="action_edit">edit</string>
+    <string name="action_done">done</string>
     <string name="start">start</string>
     <string name="pause">pause</string>
     <string name="end">end</string>
     <string name="start_event">start event</string>
     <string name="title_activity_event">EventActivity</string>
     <string name="title_activity_nota">NotaActivity</string>
+
+    <!--Nota Edit Form-->
+    <string name="label_subject">subject</string>
+    <string name="label_note">note</string>
+    <string name="label_start">start</string>
+    <string name="label_end">end</string>
+    <string name="label_duration">duration</string>
+    <string name="label_latitude">latitude</string>
+    <string name="label_longitude">longitude</string>
+    <string name="label_category">category</string>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.example.android.event;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -9,9 +10,13 @@ import android.support.v4.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.event.data.NotaContract.CategoryEntry;
 import com.example.android.event.data.NotaContract.NotaEntry;
@@ -56,14 +61,15 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
     public static final int COL_LAT = 7;
     public static final int COL_LON = 8;
 
-    private TextView mSubjectView;
-    private TextView mNoteView;
-    private TextView mStartView;
-    private TextView mEndView;
-    private TextView mDurationView;
-    private TextView mCategoryView;
-    private TextView mLatitudeView;
-    private TextView mLongitudeView;
+    private EditText mSubjectView;
+    private EditText mNoteView;
+    private EditText mStartView;
+    private EditText mEndView;
+    private EditText mDurationView;
+    private EditText mCategoryView;
+    private EditText mLatitudeView;
+    private EditText mLongitudeView;
+    private EditText mEditTextView;
 
     public NotaActivityFragment() {
     }
@@ -82,17 +88,42 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
 
         notaRowId = getActivity().getIntent().getExtras().getLong("notaRowId");
 
-        mSubjectView = (TextView) rootView.findViewById(R.id.nota_subject);
+        mSubjectView = (EditText) rootView.findViewById(R.id.nota_subject);
         mSubjectView.setText("subject for nota id: " + notaRowId);
-        mNoteView = (TextView) rootView.findViewById(R.id.nota_note);
-        mStartView = (TextView) rootView.findViewById(R.id.nota_start);
-        mEndView = (TextView) rootView.findViewById(R.id.nota_end);
-        mDurationView = (TextView) rootView.findViewById(R.id.nota_duration);
-        mCategoryView = (TextView) rootView.findViewById(R.id.nota_category);
-        mLatitudeView = (TextView) rootView.findViewById(R.id.nota_latitude);
-        mLongitudeView = (TextView) rootView.findViewById(R.id.nota_longitude);
+        mNoteView = (EditText) rootView.findViewById(R.id.nota_note);
+        mStartView = (EditText) rootView.findViewById(R.id.nota_start);
+        mEndView = (EditText) rootView.findViewById(R.id.nota_end);
+        mDurationView = (EditText) rootView.findViewById(R.id.nota_duration);
+        mCategoryView = (EditText) rootView.findViewById(R.id.nota_category);
+        mLatitudeView = (EditText) rootView.findViewById(R.id.nota_latitude);
+        mLongitudeView = (EditText) rootView.findViewById(R.id.nota_longitude);
+
+//        mSubjectView.setFocusable(false);
+//        mNoteView.setFocusable(false);
+//        mStartView.setFocusable(false);
+//        mEndView.setFocusable(false);
+//        mDurationView.setFocusable(false);
+//        mCategoryView.setFocusable(false);
+//        mLatitudeView.setFocusable(false);
+//        mLongitudeView.setFocusable(false);
+
+        mSubjectView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast msg = Toast.makeText(getActivity(), "Only 10 numbers", Toast.LENGTH_LONG);
+                msg.show();
+
+            }
+        });
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_nota, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     @Override

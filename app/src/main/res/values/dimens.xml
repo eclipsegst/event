@@ -7,6 +7,16 @@
     <!-- Toolbar -->
     <dimen name="toobar_text_size">24dp</dimen>
 
+    <!-- Edit Nota -->
+    <!-- label and edit text margin-->
+    <dimen name="label_edit_margin">4dp</dimen>
+
+    <!-- lable edit text padding-->
+    <dimen name="label_edit_padding">8dp</dimen>
+    <!-- EditText text size -->
+    <dimen name="edit_text_size">16dp</dimen>
+
+
     <!-- Floating action button-->
     <dimen name="fab_elevation">8dp</dimen>
     <dimen name="fab_press_translation_z">9dp</dimen>

@@ -38,8 +38,8 @@
     <item name="lime" type="color">#CDDC39</item>
     <item name="dark_lime" type="color">#827717</item>
 
-    <item name="yellow" type="color">#FFEB3B</item>
-    <item name="dark_yellow" type="color">#F57F17</item>
+    <!--<item name="yellow" type="color">#FFEB3B</item>-->
+    <!--<item name="dark_yellow" type="color">#F57F17</item>-->
 
     <item name="amber" type="color">#FFC107</item>
     <item name="dark_amber" type="color">#FF6F00</item>

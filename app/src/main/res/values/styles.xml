@@ -4,17 +4,17 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
-        <item name="android:textColorPrimary">@color/primary_text</item>
-        <item name="android:textColorSecondary">@color/secondary_text</item>
-        <item name="android:navigationBarColor">@color/navigation_bar_color</item>
-        <item name="android:windowBackground">@color/window_background</item>
+        <!--<item name="colorPrimary">@color/primary</item>-->
+        <!--<item name="colorPrimaryDark">@color/primary_dark</item>-->
+        <!--<item name="colorAccent">@color/accent</item>-->
+        <!--<item name="android:textColorPrimary">@color/primary_text</item>-->
+        <!--<item name="android:textColorSecondary">@color/secondary_text</item>-->
+        <!--<item name="android:navigationBarColor">@color/navigation_bar_color</item>-->
+        <!--<item name="android:windowBackground">@color/window_background</item>-->
 
     </style>
 
-    <!-- Toolbar and title  -->
+    <!-- toolbar and title  -->
     <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
 
     <style name="ToolBarStyle.Base" parent="">
@@ -27,9 +27,24 @@
     </style>
 
     <style name="TextAppearance.Widget.Event.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <!--Any text styling can be done here-->
+        <!-- any text styling can be done here-->
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/toobar_text_size</item>
+    </style>
+
+    <!-- edit nota form-->
+    <style name="LabelTextViewStyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:fontFamily">sans-serif-thin-black</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <!--customize menu-->
+        <style name="CustomizedMenuTextAppearance" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>

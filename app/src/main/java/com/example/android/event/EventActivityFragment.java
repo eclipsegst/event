@@ -149,8 +149,10 @@ public class EventActivityFragment extends Fragment implements
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
     }
+
 
     @Override
     public void onCheckedChanged(FloatingActionButton fabView, boolean isChecked) {
