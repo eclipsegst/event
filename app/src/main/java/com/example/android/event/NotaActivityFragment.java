@@ -1,20 +1,17 @@
 package com.example.android.event;
 
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +24,9 @@ import com.example.android.event.data.NotaContract.NotaEntry;
 public class NotaActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = NotaActivityFragment.class.getSimpleName();
-    static final String DETAIL_URI = "URI";
-    static final String DETAIL_TRANSITION_ANIMATION = "DTA";
     private static final int DETAIL_LOADER = 0;
 
     private Uri mUri;
-    private boolean mTransitionAnimation;
     private long notaRowId;
 
     // specify the columns we need
@@ -61,15 +55,15 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
     public static final int COL_LAT = 7;
     public static final int COL_LON = 8;
 
-    private EditText mSubjectView;
-    private EditText mNoteView;
-    private EditText mStartView;
-    private EditText mEndView;
-    private EditText mDurationView;
-    private EditText mCategoryView;
-    private EditText mLatitudeView;
-    private EditText mLongitudeView;
-    private EditText mEditTextView;
+    private TextView mSubjectTextView;
+    private TextView mNoteTextView;
+    private TextView mStartTextView;
+    private TextView mEndTextView;
+    private TextView mDurationTextView;
+    private TextView mCategoryTextView;
+    private TextView mLatitudeTextView;
+    private TextView mLongitudeTextView;
+    private Toolbar mToolbar;
 
     public NotaActivityFragment() {
     }
@@ -78,52 +72,30 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Bundle arguments = getArguments();
-//        if (arguments != null) {
-//            mUri = arguments.getParcelable(NotaActivityFragment.DETAIL_URI);
-//            mTransitionAnimation = arguments.getBoolean(NotaActivityFragment.DETAIL_TRANSITION_ANIMATION, false);
-//        }
-
         View rootView = inflater.inflate(R.layout.fragment_nota, container, false);
 
+        // retrieve the nota row id
         notaRowId = getActivity().getIntent().getExtras().getLong("notaRowId");
 
-        mSubjectView = (EditText) rootView.findViewById(R.id.nota_subject);
-        mSubjectView.setText("subject for nota id: " + notaRowId);
-        mNoteView = (EditText) rootView.findViewById(R.id.nota_note);
-        mStartView = (EditText) rootView.findViewById(R.id.nota_start);
-        mEndView = (EditText) rootView.findViewById(R.id.nota_end);
-        mDurationView = (EditText) rootView.findViewById(R.id.nota_duration);
-        mCategoryView = (EditText) rootView.findViewById(R.id.nota_category);
-        mLatitudeView = (EditText) rootView.findViewById(R.id.nota_latitude);
-        mLongitudeView = (EditText) rootView.findViewById(R.id.nota_longitude);
+        mSubjectTextView = (TextView) rootView.findViewById(R.id.subject_textview);
+        mNoteTextView = (TextView) rootView.findViewById(R.id.note_textview);
+        mStartTextView = (TextView) rootView.findViewById(R.id.start_textview);
+        mEndTextView = (TextView) rootView.findViewById(R.id.end_textview);
+        mDurationTextView = (TextView) rootView.findViewById(R.id.duration_textview);
+        mCategoryTextView = (TextView) rootView.findViewById(R.id.category_textview);
+        mLatitudeTextView = (TextView) rootView.findViewById(R.id.latitude_textview);
+        mLongitudeTextView = (TextView) rootView.findViewById(R.id.longitude_textview);
+        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
 
-//        mSubjectView.setFocusable(false);
-//        mNoteView.setFocusable(false);
-//        mStartView.setFocusable(false);
-//        mEndView.setFocusable(false);
-//        mDurationView.setFocusable(false);
-//        mCategoryView.setFocusable(false);
-//        mLatitudeView.setFocusable(false);
-//        mLongitudeView.setFocusable(false);
-
-        mSubjectView.setOnClickListener(new View.OnClickListener() {
+        mSubjectTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast msg = Toast.makeText(getActivity(), "Only 10 numbers", Toast.LENGTH_LONG);
-                msg.show();
-
+                //todo: popup window to edit
+                Toast.makeText(getActivity(), "mSubjectTextView", Toast.LENGTH_LONG).show();
             }
         });
 
         return rootView;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_nota, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-
     }
 
     @Override
@@ -163,29 +135,28 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
         if (cursor != null && cursor.moveToFirst()) {
 
             String subject = cursor.getString(COL_SUBJECT);
-            mSubjectView.setText(subject);
+            mSubjectTextView.setText(subject);
 
             String note = cursor.getString(COL_NOTE);
-            mNoteView.setText(note);
+            mNoteTextView.setText(note);
 
             long startTime = cursor.getLong(COL_START);
-            mStartView.setText(utilities.getReadableDate(startTime));
+            mStartTextView.setText(utilities.getReadableDate(startTime));
 
             long endTime = cursor.getLong(COL_END);
-            mEndView.setText(utilities.getReadableDate(endTime));
+            mEndTextView.setText(utilities.getReadableDate(endTime));
 
             long duration = cursor.getLong(COL_DURATION);
-            mDurationView.setText(utilities.formatDuration(duration));
+            mDurationTextView.setText(utilities.formatDuration(duration));
 
             String category = cursor.getString(COL_CATEGORY_NAME);
-            mCategoryView.setText(category);
+            mCategoryTextView.setText(category);
 
             float latitude = cursor.getFloat(COL_LAT);
-            mLatitudeView.setText(String.valueOf(latitude));
+            mLatitudeTextView.setText(String.valueOf(latitude));
 
             float longitude = cursor.getFloat(COL_LON);
-            mLongitudeView.setText(String.valueOf(longitude));
-
+            mLongitudeTextView.setText(String.valueOf(longitude));
         }
     }
 

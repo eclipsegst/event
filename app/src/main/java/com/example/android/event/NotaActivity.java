@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class NotaActivity extends AppCompatActivity {
 
@@ -21,40 +22,20 @@ public class NotaActivity extends AppCompatActivity {
         mStatusBarColor = ((Constants) getApplication()).getStatusBarColor();
 
         if (Build.VERSION.SDK_INT >= 21) {
-            // Top status bar
+            // top status bar
             getWindow().setStatusBarColor(this.getResources().getColor(mStatusBarColor));
 
-            // Bottom navigation bar
+            // bottom navigation bar
             getWindow().setNavigationBarColor(this.getResources().getColor(mStatusBarColor));
         }
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setBackgroundColor(getResources().getColor(mToolbarColor));
-        mToolbar.setTitle("nota");
+        mToolbar.setTitle("");
+        TextView mTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText("nota detail");
+
         setSupportActionBar(mToolbar);
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_nota, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

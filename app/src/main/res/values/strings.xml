@@ -14,7 +14,7 @@
     <string name="title_activity_event">EventActivity</string>
     <string name="title_activity_nota">NotaActivity</string>
 
-    <!--Nota Edit Form-->
+    <!-- nota detail label-->
     <string name="label_subject">subject</string>
     <string name="label_note">note</string>
     <string name="label_start">start</string>
@@ -23,5 +23,6 @@
     <string name="label_latitude">latitude</string>
     <string name="label_longitude">longitude</string>
     <string name="label_category">category</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>

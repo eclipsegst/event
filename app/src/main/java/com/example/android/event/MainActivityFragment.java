@@ -89,8 +89,6 @@ public class MainActivityFragment extends Fragment implements
             }
         });
 
-
-
         return rootView;
     }
 

@@ -42,7 +42,11 @@
             android:name=".NotaActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_nota"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".TestActivity"
+            android:label="@string/title_activity_test" >
         </activity>
     </application>
 
