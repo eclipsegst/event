@@ -59,6 +59,10 @@
     <item name="blue_grey" type="color">#607D8B</item>
     <item name="dark_blue_grey" type="color">#263238</item>
 
+    <item name="blue_500" type="color">#2196F3</item>
+    <item name="blue_700" type="color">#1976D2</item>
+    <item name="blue_900" type="color">#0D47A1</item>
+
 
     <!--Floating action button-->
     <color name="fab_color_1">#ff5252</color>

@@ -1,11 +1,20 @@
 package com.example.android.event;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,12 +27,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // setTheme(R.style.MyRandomTheme);
 
         mToolbarColor = ((Constants) getApplication()).getToolbarColor();
         mStatusBarColor = ((Constants) getApplication()).getStatusBarColor();
 
-        if (mToolbarColor == -1) {
+        if (mToolbarColor == -1 || mStatusBarColor == -1) {
             int randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size());
 
             mToolbarColor = ((Constants) getApplication()).TOOLBAR_COLOR.get(randomNumber);
@@ -38,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(mStatusBarColor));
 
             // Bottom navigation bar
-            getWindow().setNavigationBarColor(getResources().getColor(mStatusBarColor));
+            getWindow().setNavigationBarColor(getResources().getColor(mToolbarColor));
+            getWindow().getDecorView().getRootView().setBackgroundColor(getResources().getColor(mStatusBarColor));
         }
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -48,8 +57,39 @@ public class MainActivity extends AppCompatActivity {
         mTitle.setText("now");
         setSupportActionBar(mToolbar);
 
-        FloatingActionButton nFabNew = (FloatingActionButton) findViewById(R.id.fab_new);
-        nFabNew.setBackgroundColor(getResources().getColor(mToolbarColor));
+
+        FloatingActionButton mFabNew = (FloatingActionButton) findViewById(R.id.fab_new);
+        Drawable mBackground = (Drawable) getResources().getDrawable(R.drawable.fab_background);
+        mFabNew.setBackground(mBackground);
+        mFabNew.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        Log.d(LOG_TAG, "zztg2: getMeasuredWidth=" + mFabNew.getMeasuredWidth() + "getMeasuredHeight=" + mFabNew.getMeasuredHeight());
+
+        int[] mFabNewLocation = new int[2];
+
+        mFabNew.getLocationInWindow(mFabNewLocation);
+
+        Paint paint = new Paint();
+        paint.setColor(getResources().getColor(mToolbarColor));
+
+        Bitmap bg = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bg);
+        canvas.drawCircle(400, 400, 400, paint);
+
+        Paint eraser = new Paint();
+        eraser.setStrokeWidth(12);
+        eraser.setStyle(Paint.Style.FILL);
+        eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+        canvas.drawLine(400, 550, 400, 250, eraser);
+        canvas.drawLine(550, 400, 250, 400, eraser);
+
+        canvas.drawCircle(mFabNewLocation[0], mFabNewLocation[1], 100, paint);
+
+
+        mFabNew.setBackground(new BitmapDrawable(bg));
+        mFabNew.setBackgroundColor(getResources().getColor(mToolbarColor));
+
+        mFabNew.setBackgroundDrawable(new BitmapDrawable(bg));
 
     }
 

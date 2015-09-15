@@ -14,6 +14,8 @@
     <string name="title_activity_event">EventActivity</string>
     <string name="title_activity_nota">NotaActivity</string>
 
+    <string name="empty_nota_list">No Nota Information Available</string>
+
     <!-- nota detail label-->
     <string name="label_subject">subject</string>
     <string name="label_note">note</string>
@@ -25,4 +27,5 @@
     <string name="label_category">category</string>
     <string name="title_activity_test">TestActivity</string>
 
+    <string name="clear_world">Clear world!</string>
 </resources>
