@@ -59,10 +59,10 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
             NotaEntry.COLUMN_START,
             NotaEntry.COLUMN_END,
             NotaEntry.COLUMN_DURATION,
-            CategoryEntry.COLUMN_NAME,
             NotaEntry.COLUMN_NOTE,
             NotaEntry.COLUMN_LAT,
-            NotaEntry.COLUMN_LON
+            NotaEntry.COLUMN_LON,
+            CategoryEntry.COLUMN_NAME
     };
 
     // These indices are tied to NOTA_COLUMNS.
@@ -72,10 +72,10 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
     public static final int COL_START = 2;
     public static final int COL_END = 3;
     public static final int COL_DURATION = 4;
-    public static final int COL_CATEGORY_NAME = 5;
-    public static final int COL_NOTE = 6;
-    public static final int COL_LAT = 7;
-    public static final int COL_LON = 8;
+    public static final int COL_NOTE = 5;
+    public static final int COL_LAT = 6;
+    public static final int COL_LON = 7;
+    public static final int COL_CATEGORY_NAME = 8;
 
     private TextView mSubjectTextView;
     private TextView mNoteTextView;
@@ -102,6 +102,7 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
 
         // retrieve the nota row id
         notaId = getActivity().getIntent().getExtras().getLong("notaId");
+        Log.d(LOG_TAG, "notaId:" + notaId);
 
         mSubjectTextView = (TextView) rootView.findViewById(R.id.subject_textview);
         mNoteTextView = (TextView) rootView.findViewById(R.id.note_textview);
@@ -145,6 +146,81 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
                 p.y = location[1];
                 if (p != null)
                     showPopup(getActivity(), p, NotaEntry.COLUMN_NOTE, String.valueOf(mNoteTextView.getText()));
+
+            }
+        });
+
+        mStartTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int[] location = new int[2];
+                mStartTextView.getLocationOnScreen(location);
+
+                p = new Point();
+                p.x = location[0];
+                p.y = location[1];
+                if (p != null)
+                    showPopup(getActivity(), p, NotaEntry.COLUMN_START, String.valueOf(mStartTextView.getText()));
+
+            }
+        });
+
+        mEndTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int[] location = new int[2];
+                mEndTextView.getLocationOnScreen(location);
+
+                p = new Point();
+                p.x = location[0];
+                p.y = location[1];
+                if (p != null)
+                    showPopup(getActivity(), p, NotaEntry.COLUMN_END, String.valueOf(mEndTextView.getText()));
+
+            }
+        });
+
+        mLatitudeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int[] location = new int[2];
+                mLatitudeTextView.getLocationOnScreen(location);
+
+                p = new Point();
+                p.x = location[0];
+                p.y = location[1];
+                if (p != null)
+                    showPopup(getActivity(), p, NotaEntry.COLUMN_LAT, String.valueOf(mLatitudeTextView.getText()));
+
+            }
+        });
+
+        mLongitudeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int[] location = new int[2];
+                mLongitudeTextView.getLocationOnScreen(location);
+
+                p = new Point();
+                p.x = location[0];
+                p.y = location[1];
+                if (p != null)
+                    showPopup(getActivity(), p, NotaEntry.COLUMN_LON, String.valueOf(mLongitudeTextView.getText()));
+
+            }
+        });
+
+        mDurationTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int[] location = new int[2];
+                mDurationTextView.getLocationOnScreen(location);
+
+                p = new Point();
+                p.x = location[0];
+                p.y = location[1];
+                if (p != null)
+                    showPopup(getActivity(), p, NotaEntry.COLUMN_DURATION, String.valueOf(mDurationTextView.getText()));
 
             }
         });
@@ -252,7 +328,7 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
         popup.showAtLocation(layout, Gravity.TOP, p.x + OFFSET_X, p.y + OFFSET_Y);
 
         // Getting a reference to Close button, and close the popup when clicked.
-        Button close = (Button) layout.findViewById(R.id.close);
+        final Button close = (Button) layout.findViewById(R.id.close);
         close.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -274,18 +350,72 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
                 mFrameLayout.getForeground().setAlpha(0);
 
                 mContentValues.put(NotaEntry._ID, notaId);
-                mContentValues.put(mColumnName, String.valueOf(mEditView.getText()));
+                if (mColumnName.contains(NotaEntry.COLUMN_SUBJECT) ||
+                        mColumnName.contains(NotaEntry.COLUMN_NOTE) ||
+                        mColumnName.contains(NotaEntry.COLUMN_SUBJECT) ||
+                        mColumnName.contains(NotaEntry.COLUMN_SUBJECT)) {
+                    mContentValues.put(mColumnName, String.valueOf(mEditView.getText()));
+                } else if (mColumnName.contains(NotaEntry.COLUMN_START) ||
+                        mColumnName.contains(NotaEntry.COLUMN_END)) {
+                    long updateValue = utilities.convertStringToMilliseconds(String.valueOf(mEditView.getText()));
+                    if (updateValue != 1L) {
+                        mContentValues.put(mColumnName, updateValue);
+                    } else {
+                        // todo: handle incorrect format
+                    }
+                } else if (mColumnName.contains(NotaEntry.COLUMN_LAT) ||
+                        mColumnName.contains(NotaEntry.COLUMN_LON)) {
+                    String str;
+                    str = String.valueOf(mEditView.getText());
+                    if (!str.isEmpty() && str != null) {
+                        double updateValues = Double.parseDouble(str);
+                        mContentValues.put(mColumnName, updateValues);
+                    } else {
+                        // todo: handle empty string
+                    }
+                } else if (mColumnName.contains(NotaEntry.COLUMN_DURATION)) {
+
+                    long res = -1L;
+                    res = (long)utilities.convertDurationToSeconds(String.valueOf(mEditView.getText()));
+
+                    if (res != -1L) {
+                        mContentValues.put(mColumnName, res);
+                    }
+                }
 
                 mContentValues.remove(CategoryEntry.COLUMN_NAME);
+                //mContentValues.put(NotaEntry.COLUMN_START, 1442428166000L);
                 int count = 0;
                 String str = Arrays.asList(mContentValues.valueSet()).toString();
                 count = getActivity().getApplicationContext().getContentResolver().update(
-                        NotaEntry.CONTENT_URI, mContentValues, NotaEntry._ID + "= ?",
+                        NotaEntry.CONTENT_URI, mContentValues, NotaEntry.TABLE_NAME + "." + NotaEntry._ID + "= ?",
                         new String[]{Long.toString(notaId)}
                 );
 
-                Log.d("TestActivity", "Saved text: " + mEditView.getText() + "count=" + count + str);
-                Toast.makeText(getActivity(), "Saved text: " + mEditView.getText() + "count=" + count + str, Toast.LENGTH_LONG).show();
+
+                // verify update correctly
+                Cursor cursor = getActivity().getApplicationContext().getContentResolver().query(
+                        NotaEntry.CONTENT_URI,
+                        NOTA_COLUMNS,
+                        NotaEntry.TABLE_NAME + "." + NotaEntry._ID + " = ?",
+                        new String[] {String.valueOf(notaId)},
+                        null
+                );
+
+                cursor.moveToFirst();
+                long id = cursor.getLong(COL_NOTA_ID);
+                String note = cursor.getString(COL_NOTE);
+                long start = cursor.getLong(COL_START);
+                long end = cursor.getLong(COL_END);
+                long duration = cursor.getLong(COL_DURATION);
+
+                Log.d(LOG_TAG, "notaId in where clause=" + notaId);
+                Log.d(LOG_TAG, "cursor count=" + cursor.getCount());
+                Log.d(LOG_TAG, "values saved: " + "count=" + count + " "+ str );
+                Log.d(LOG_TAG, "values from db: " + "id=" + id + " start=" + start + " end=" + end + " note=" + note + " duration=" + duration);
+                if(!cursor.isClosed()) {
+                    cursor.close();
+                }
 
             }
         });

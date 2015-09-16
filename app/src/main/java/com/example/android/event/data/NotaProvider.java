@@ -206,7 +206,7 @@ public class NotaProvider extends ContentProvider {
 
         switch (match) {
             case NOTA: {
-                normalizeDate(values);
+//                normalizeDate(values);
                 long _id = db.insert(NotaEntry.TABLE_NAME, null, values);
                 if (_id > 0)
                     returnUri = NotaEntry.buildNotaUri(_id);
@@ -258,12 +258,12 @@ public class NotaProvider extends ContentProvider {
         return rowsDeleted;
     }
 
-    private void normalizeDate(ContentValues values) {
-        if (values.containsKey(NotaEntry.COLUMN_START)) {
-            long dateValue = values.getAsLong(NotaEntry.COLUMN_START);
-            values.put(NotaEntry.COLUMN_START, NotaContract.normalizeDate(dateValue));
-        }
-    }
+//    private void normalizeDate(ContentValues values) {
+//        if (values.containsKey(NotaEntry.COLUMN_START)) {
+//            long dateValue = values.getAsLong(NotaEntry.COLUMN_START);
+//            values.put(NotaEntry.COLUMN_START, NotaContract.normalizeDate(dateValue));
+//        }
+//    }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
@@ -273,7 +273,7 @@ public class NotaProvider extends ContentProvider {
 
         switch (match) {
             case NOTA:
-                normalizeDate(values);
+//                normalizeDate(values);
                 rowsUpdated = db.update(NotaEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             case CATEGORY:
@@ -301,7 +301,7 @@ public class NotaProvider extends ContentProvider {
                 int returnCount = 0;
                 try {
                     for (ContentValues value : values) {
-                        normalizeDate(value);
+//                        normalizeDate(value);
                         long _id = db.insert(NotaEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;

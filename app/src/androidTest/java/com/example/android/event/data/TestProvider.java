@@ -227,6 +227,48 @@ public class TestProvider extends AndroidTestCase {
         cursor.close();
     }
 
+    public void testUpdateNota() {
+
+        ContentValues testValuesCategory = TestUtilities.createCategoryValues();
+        long categoryRowId = TestUtilities.insertCategoryValues(mContext);
+
+        ContentValues testValuesNota = TestUtilities.createNotaValues(categoryRowId);
+        Uri notaUri = mContext.getContentResolver()
+                .insert(NotaEntry.CONTENT_URI, testValuesNota);
+        long notaRowId = ContentUris.parseId(notaUri);
+
+        assertTrue("Error: Insert nota entry failure.", notaRowId != -1);
+
+        ContentValues updateValues = new ContentValues(testValuesNota);
+        updateValues.put(NotaEntry.COLUMN_START, 1442428166000L);
+
+        Cursor cursorNota = mContext.getContentResolver().query(NotaEntry.CONTENT_URI, null,
+                null, null, null);
+        TestUtilities.TestContentObserver tco = TestUtilities.getTestContentObserver();
+        cursorNota.registerContentObserver(tco);
+
+        int count = mContext.getContentResolver().update(
+                NotaEntry.CONTENT_URI, updateValues, NotaEntry.TABLE_NAME + "." + NotaEntry._ID + "= ?",
+                new String[]{Long.toString(notaRowId)}
+        );
+
+        assertEquals("Error: No nota row updated.", 1, count);
+        tco.waitForNotificationOrFail();
+
+        cursorNota.unregisterContentObserver(tco);
+        cursorNota.close();
+
+        Cursor cursor = mContext.getContentResolver().query(
+                NotaEntry.CONTENT_URI,
+                null,
+                NotaEntry.TABLE_NAME + "." + NotaEntry._ID + " = " + notaRowId,
+                null,
+                null
+        );
+
+        TestUtilities.validateCursor("testUpdateNota" + notaRowId, cursor, updateValues);
+    }
+
     /**
      * Test insert and read provider.
      * It relies on insertions, so insert and query functionality must also be completed before

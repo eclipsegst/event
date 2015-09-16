@@ -32,7 +32,7 @@ public class TestNotaContract extends AndroidTestCase {
                 TEST_NOTA_CATEGORY,
                 notaCategoryWithStartDateUri.getLastPathSegment());
         assertEquals("Error: Nota start date not properly appended to the end of the Uri",
-                NotaContract.normalizeDate(TEST_NOTA_DATE),
+                TEST_NOTA_DATE,
                 NotaEntry.getStartDateFromUri(notaCategoryWithStartDateUri));
     }
 
@@ -45,7 +45,7 @@ public class TestNotaContract extends AndroidTestCase {
                 TEST_NOTA_CATEGORY,
                 NotaEntry.getCategoryFromUri(notaCategoryWithDateUri));
         assertEquals("Error: Nota date not properly appended to the end of the Uri",
-                NotaContract.normalizeDate(TEST_NOTA_DATE),
+                TEST_NOTA_DATE,
                 NotaEntry.getDateFromUri(notaCategoryWithDateUri));
     }
 }

@@ -141,12 +141,12 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
 
         // read start from cursor
         long startDate = mCursor.getLong(MainActivityFragment.COL_START);
-        String start = utilities.getReadableDate(startDate, "dd/MM/yy HH:mm");
+        String start = utilities.getReadableDate(startDate, utilities.dateFormat);
         viewHolder.mStartView.setText(start);
 
         // read end from cursor
         long endDate = mCursor.getLong(MainActivityFragment.COL_END);
-        String end = utilities.getReadableDate(endDate, "dd/MM/yy HH:mm");
+        String end = utilities.getReadableDate(endDate, utilities.dateFormat);
         viewHolder.mEndView.setText(end);
 
         // read duration from cursor

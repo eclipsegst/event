@@ -24,12 +24,6 @@ public class NotaContract {
     // To make it easy to query for the exact date, we normalize all dates that go into
     // the database to the start of the Julian day at UTC.
     // Todo: refactor it with GregorianCalendar
-    public static long normalizeDate(long startDate) {
-        Time time = new Time();
-        time.set(startDate);
-        int julianDay = Time.getJulianDay(startDate, time.gmtoff);
-        return time.setJulianDay(julianDay);
-    }
 
     /* Inner class that defines the table contents of the category table */
     public static final class CategoryEntry implements BaseColumns {
@@ -97,15 +91,14 @@ public class NotaContract {
 
         public static Uri buildNotaCategoryWithStartDate(
                 String category, long startDate) {
-            long normlizedDate = normalizeDate(startDate);
             return CONTENT_URI.buildUpon().appendPath(category)
-                    .appendQueryParameter(COLUMN_START, Long.toString(normlizedDate))
+                    .appendQueryParameter(COLUMN_START, Long.toString(startDate))
                     .build();
         }
 
         public static Uri buildNotaCategoryWithDate(String category, long date) {
             return CONTENT_URI.buildUpon().appendPath(category)
-                    .appendPath(Long.toString(normalizeDate(date))).build();
+                    .appendPath(Long.toString(date)).build();
         }
 
         public static String getCategoryFromUri(Uri uri) {

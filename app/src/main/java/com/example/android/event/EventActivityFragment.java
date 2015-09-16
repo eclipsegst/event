@@ -205,10 +205,11 @@ public class EventActivityFragment extends Fragment implements
                 long notaRowId = -1;
 
                 notaRowId = insertNewNota(getActivity().getApplicationContext(), newNotaValues);
-                Log.d(LOG_TAG, "notaRowId: " + notaRowId);
-//                MainActivityFragment.mNotaAdapter.notifyDataSetChanged();
+                Log.d(LOG_TAG, "notaId: " + notaRowId);
+                MainActivityFragment.mNotaAdapter.notifyDataSetChanged();
+                MainActivityFragment.mRecyclerView.setAdapter(MainActivityFragment.mNotaAdapter);
                 Intent intent = new Intent(getActivity(), NotaActivity.class);
-                intent.putExtra("notaRowId", notaRowId);
+                intent.putExtra("notaId", notaRowId);
                 startActivity(intent);
 
                 break;

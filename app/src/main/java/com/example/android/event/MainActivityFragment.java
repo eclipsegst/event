@@ -25,8 +25,8 @@ public class MainActivityFragment extends Fragment implements
 
     private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
 
-    public NotaAdapter mNotaAdapter;
-    private RecyclerView mRecyclerView;
+    public static NotaAdapter mNotaAdapter;
+    public static RecyclerView mRecyclerView;
     private FloatingActionButton mFabNew;
     private int mChoiceMode;
     private static final String SELECTED_KEY = "selected_position";
@@ -40,10 +40,12 @@ public class MainActivityFragment extends Fragment implements
     private static final String[] NOTA_COLUMNS = {
             NotaEntry.TABLE_NAME + "." + NotaEntry._ID,
             NotaEntry.COLUMN_SUBJECT,
-            NotaEntry.COLUMN_NOTE,
             NotaEntry.COLUMN_START,
             NotaEntry.COLUMN_END,
             NotaEntry.COLUMN_DURATION,
+            NotaEntry.COLUMN_NOTE,
+            NotaEntry.COLUMN_LAT,
+            NotaEntry.COLUMN_LON,
             CategoryEntry.COLUMN_NAME
     };
 
@@ -51,11 +53,13 @@ public class MainActivityFragment extends Fragment implements
     // If NOTA_COLUMNS changes, these must change.
     public static final int COL_NOTA_ID = 0;
     public static final int COL_SUBJECT = 1;
-    public static final int COL_NOTE = 2;
-    public static final int COL_START = 3;
-    public static final int COL_END = 4;
-    public static final int COL_DURATION = 5;
-    public static final int COL_CATEGORY_NAME = 6;
+    public static final int COL_START = 2;
+    public static final int COL_END = 3;
+    public static final int COL_DURATION = 4;
+    public static final int COL_NOTE = 5;
+    public static final int COL_LAT = 6;
+    public static final int COL_LON = 7;
+    public static final int COL_CATEGORY_NAME = 8;
 
 
     /**
