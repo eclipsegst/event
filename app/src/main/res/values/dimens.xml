@@ -25,6 +25,18 @@
     <dimen name="fab_icon_size">24dp</dimen>
 
     <!-- popup window-->
+    <!-- label and edit text margin-->
+    <dimen name="popup_label_edit_margin">4dp</dimen>
+    <!-- lable edit text padding-->
+    <dimen name="popup_label_edit_padding">8dp</dimen>
+    <!-- edit text text size -->
+    <dimen name="popup_text_size">16dp</dimen>
     <dimen name="popup_corner_radius">8dp</dimen>
+
+
+    <!-- cardview -->
+    <dimen name="cardview_header_margin">4dp</dimen>
+    <dimen name="cardview_header_textsize">20dp</dimen>
+    <dimen name="cardview_content_view_margin">4dp</dimen>
 
 </resources>

@@ -6,8 +6,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,19 +15,20 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
-
-
         <android.support.v7.widget.CardView
             android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="10dp"
+            card_view:cardCornerRadius="4dp"
             android:elevation="100dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
+                    android:id="@+id/cardview_item_header_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -36,73 +37,114 @@
                         android:id="@+id/posttime_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-condensed"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
                         android:textSize="20sp"
                         android:text="sep 18"
-                        android:layout_margin="10dp"
+                        android:layout_margin="@dimen/cardview_header_margin"
+                        android:textAppearance="?android:textAppearanceLarge"
                         android:layout_gravity="center_vertical|start"/>
-
-                    <TextView
-                        android:id="@+id/category_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textSize="20sp"
-                        android:text="category"
-                        android:layout_margin="10dp"
-                        android:gravity="right"
-                        android:textAlignment="gravity"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/list_item_subject"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textSize="20sp"/>
-
-                    <TextView
-                        android:id="@+id/list_item_start_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textAppearance="?android:textAppearanceMedium"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/list_item_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textAppearance="?android:textAppearanceSmall" />
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:text="category"
+                        android:layout_margin="@dimen/cardview_header_margin"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:gravity="right"
+                        android:textAlignment="gravity"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/list_item_subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:layout_margin="@dimen/cardview_content_view_margin"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/list_item_start_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="start"
+                            android:fontFamily="sans-serif"
+                            android:layout_margin="@dimen/cardview_content_view_margin"
+                            android:textAppearance="?android:textAppearanceSmall"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/list_item_end"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:gravity="left"
+                            android:text="end"
+                            android:layout_margin="@dimen/cardview_content_view_margin"
+                            android:textAppearance="?android:textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/list_item_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="duration"
+                            android:fontFamily="sans-serif"
+                            android:layout_margin="@dimen/cardview_content_view_margin"
+                            android:textAppearance="?android:textAppearanceMedium"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/list_item_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textAppearance="?android:textAppearanceSmall"/>
+                        android:id="@+id/list_item_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:padding="4dp"
+                        android:text="note"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_margin="@dimen/cardview_content_view_margin"
+                        android:textAppearance="?android:textAppearanceMedium"/>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <View
+            android:id="@+id/divider_view"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.8dp"
             android:background="@color/grey"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="0dp"/>
 
     </LinearLayout>
 

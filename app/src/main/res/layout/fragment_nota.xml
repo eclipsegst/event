@@ -1,3 +1,9 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainmenu"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:foreground="@drawable/shape_window_dim" >
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,140 +15,150 @@
         >
         <!-- put everything you already have here-->
 
+
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="14dp"
-            android:paddingRight="14dp"
-            android:paddingTop="8dp"
             android:background="#F5F5F5"
             android:orientation="vertical">
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detail_item_margin"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/LabelTextViewStyle"
-                    android:text="@string/label_subject"
-                    />
-                <TextView
-
-                    style="@style/ContentTextViewStyle"
-                    android:id="@+id/subject_textview"
-                    android:background="@drawable/content_background_style"/>
-            </LinearLayout>
+            <include layout="@layout/toolbar_main"/>
 
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detail_item_margin"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
-                <TextView
-                    style="@style/LabelTextViewStyle"
-                    android:text="@string/label_note"
-                    />
-                <TextView
-                    style="@style/ContentTextViewStyle"
-                    android:id="@+id/note_textview"/>
-            </LinearLayout>
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detail_item_margin"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelTextViewStyle"
+                        android:text="@string/label_subject"
+                        />
+                    <TextView
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detail_item_margin"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/LabelTextViewStyle"
-                    android:text="@string/label_category"
-                    />
-                <TextView
-                    style="@style/ContentTextViewStyle"
-                    android:id="@+id/category_textview"/>
-            </LinearLayout>
+                        style="@style/ContentTextViewStyle"
+                        android:id="@+id/subject_textview"
+                        android:background="@drawable/content_background_style"/>
+                </LinearLayout>
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detail_item_margin"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/LabelTextViewStyle"
-                    android:text="@string/label_start"
-                    />
-                <TextView
-                    style="@style/ContentTextViewStyle"
-                    android:id="@+id/start_textview"/>
-            </LinearLayout>
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detail_item_margin"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelTextViewStyle"
+                        android:text="@string/label_note"
+                        />
+                    <TextView
+                        style="@style/ContentTextViewStyle"
+                        android:id="@+id/note_textview"/>
+                </LinearLayout>
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detail_item_margin"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/LabelTextViewStyle"
-                    android:text="@string/label_end"
-                    />
-                <TextView
-                    style="@style/ContentTextViewStyle"
-                    android:id="@+id/end_textview"/>
-            </LinearLayout>
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detail_item_margin"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelTextViewStyle"
+                        android:text="@string/label_category"
+                        />
+                    <TextView
+                        style="@style/ContentTextViewStyle"
+                        android:id="@+id/category_textview"/>
+                </LinearLayout>
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detail_item_margin"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/LabelTextViewStyle"
-                    android:text="@string/label_duration"
-                    />
-                <TextView
-                    style="@style/ContentTextViewStyle"
-                    android:id="@+id/duration_textview"/>
-            </LinearLayout>
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detail_item_margin"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelTextViewStyle"
+                        android:text="@string/label_start"
+                        />
+                    <TextView
+                        style="@style/ContentTextViewStyle"
+                        android:id="@+id/start_textview"/>
+                </LinearLayout>
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detail_item_margin"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/LabelTextViewStyle"
-                    android:text="@string/label_latitude"
-                    />
-                <TextView
-                    style="@style/ContentTextViewStyle"
-                    android:id="@+id/latitude_textview"/>
-            </LinearLayout>
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detail_item_margin"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelTextViewStyle"
+                        android:text="@string/label_end"
+                        />
+                    <TextView
+                        style="@style/ContentTextViewStyle"
+                        android:id="@+id/end_textview"/>
+                </LinearLayout>
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/detail_item_margin"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/LabelTextViewStyle"
-                    android:text="@string/label_longitude"
-                    />
-                <TextView
-                    style="@style/ContentTextViewStyle"
-                    android:id="@+id/longitude_textview"/>
-            </LinearLayout>
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detail_item_margin"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelTextViewStyle"
+                        android:text="@string/label_duration"
+                        />
+                    <TextView
+                        style="@style/ContentTextViewStyle"
+                        android:id="@+id/duration_textview"/>
+                </LinearLayout>
 
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detail_item_margin"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelTextViewStyle"
+                        android:text="@string/label_latitude"
+                        />
+                    <TextView
+                        style="@style/ContentTextViewStyle"
+                        android:id="@+id/latitude_textview"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/detail_item_margin"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelTextViewStyle"
+                        android:text="@string/label_longitude"
+                        />
+                    <TextView
+                        style="@style/ContentTextViewStyle"
+                        android:id="@+id/longitude_textview"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
 
     </TableLayout>
 </ScrollView>
+
+    </FrameLayout>

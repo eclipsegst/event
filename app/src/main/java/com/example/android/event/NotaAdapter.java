@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.util.Log;
 
@@ -40,22 +41,29 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
     final private NotaAdapterOnClickHandler mClickHandler;
     final private View mEmptyView;
     final private ItemChoiceManager mICM;
+    final private int mPopupHeaderColor;
 
     /**
      * Cache of the children views for a nota list item.
      */
     public class NotaAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mSubjectView;
+        public final TextView mNoteView;
         public final TextView mDurationView;
-        public final TextView mStartTimeView;
+        public final TextView mStartView;
+        public final TextView mEndView;
         public final TextView mCategoryView;
+        public final LinearLayout mCardViewHeaderLinearLayout;
 
         public NotaAdapterViewHolder(View view) {
             super(view);
             mSubjectView = (TextView) view.findViewById(R.id.list_item_subject);
+            mNoteView = (TextView) view.findViewById(R.id.list_item_note);
             mDurationView = (TextView) view.findViewById(R.id.list_item_duration);
-            mStartTimeView = (TextView) view.findViewById(R.id.list_item_start_date);
+            mStartView = (TextView) view.findViewById(R.id.list_item_start_date);
+            mEndView = (TextView) view.findViewById(R.id.list_item_end);
             mCategoryView = (TextView) view.findViewById(R.id.list_item_category);
+            mCardViewHeaderLinearLayout = (LinearLayout) view.findViewById(R.id.cardview_item_header_linear_layout);
         }
 
         @Override
@@ -90,13 +98,12 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
         mEmptyView = emptyView;
         mICM = new ItemChoiceManager(this);
         mICM.setChoiceMode(choiceMode);
+        mPopupHeaderColor = ((Constants) mContext.getApplicationContext()).getPopupHeaderClor();
+
+
+
     }
 
-//    // zhao add
-//    @Override
-//    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-//        super.onAttachedToRecyclerView(recyclerView);
-//    }
     /**
      * This takes advantage of the fact that the viewGroup passed to onCreateViewHolder is the
      * RecyclerView that will be used to contain the view, so that it can get the current
@@ -128,17 +135,30 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
         String subject = mCursor.getString(MainActivityFragment.COL_SUBJECT);
         viewHolder.mSubjectView.setText(subject);
 
-        // read start date from cursor
+        // read note
+        String note = mCursor.getString(MainActivityFragment.COL_NOTE);
+        viewHolder.mNoteView.setText(note);
+
+        // read start from cursor
         long startDate = mCursor.getLong(MainActivityFragment.COL_START);
         String start = utilities.getReadableDate(startDate, "dd/MM/yy HH:mm");
-        viewHolder.mStartTimeView.setText(start);
+        viewHolder.mStartView.setText(start);
+
+        // read end from cursor
+        long endDate = mCursor.getLong(MainActivityFragment.COL_END);
+        String end = utilities.getReadableDate(endDate, "dd/MM/yy HH:mm");
+        viewHolder.mEndView.setText(end);
 
         // read duration from cursor
         long duration = mCursor.getLong(MainActivityFragment.COL_DURATION);
         viewHolder.mDurationView.setText("" + utilities.formatDuration(duration));
+
         // read category from cursor
         String category = mCursor.getString(MainActivityFragment.COL_CATEGORY_NAME);
         viewHolder.mCategoryView.setText(category);
+
+
+        viewHolder.mCardViewHeaderLinearLayout.setBackgroundColor(mPopupHeaderColor);
 
         mICM.onBindViewHolder(viewHolder, position);
     }

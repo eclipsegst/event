@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.android.event.data.NotaContract.CategoryEntry;
 import com.example.android.event.data.NotaContract.NotaEntry;
@@ -32,13 +33,16 @@ public class MainActivityFragment extends Fragment implements
     private static final int NOTA_LOADER = 0;
 
     private int mStatusBarColor;
+    private int mPopupHeaderColor;
 
     // specify the columns we need
     // change the indices after those columns if we change the columns
     private static final String[] NOTA_COLUMNS = {
             NotaEntry.TABLE_NAME + "." + NotaEntry._ID,
             NotaEntry.COLUMN_SUBJECT,
+            NotaEntry.COLUMN_NOTE,
             NotaEntry.COLUMN_START,
+            NotaEntry.COLUMN_END,
             NotaEntry.COLUMN_DURATION,
             CategoryEntry.COLUMN_NAME
     };
@@ -47,9 +51,11 @@ public class MainActivityFragment extends Fragment implements
     // If NOTA_COLUMNS changes, these must change.
     public static final int COL_NOTA_ID = 0;
     public static final int COL_SUBJECT = 1;
-    public static final int COL_START = 2;
-    public static final int COL_DURATION = 3;
-    public static final int COL_CATEGORY_NAME = 4;
+    public static final int COL_NOTE = 2;
+    public static final int COL_START = 3;
+    public static final int COL_END = 4;
+    public static final int COL_DURATION = 5;
+    public static final int COL_CATEGORY_NAME = 6;
 
 
     /**
@@ -94,7 +100,7 @@ public class MainActivityFragment extends Fragment implements
                 int idColumnIndex = mCursor.getColumnIndex(NotaEntry._ID);
                 long noteId = mCursor.getLong(idColumnIndex);
                 Intent intent = new Intent(getActivity(), NotaActivity.class);
-                intent.putExtra("notaRowId", noteId);
+                intent.putExtra("notaId", noteId);
                 startActivity(intent);
             }
 

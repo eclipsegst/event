@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
     private int mToolbarColor;
     private int mStatusBarColor;
+    private int mPopupHeaderColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
         mToolbarColor = ((Constants) getApplication()).getToolbarColor();
         mStatusBarColor = ((Constants) getApplication()).getStatusBarColor();
+        mPopupHeaderColor = ((Constants) getApplication()).getPopupHeaderClor();
 
-        if (mToolbarColor == -1 || mStatusBarColor == -1) {
+        if (mToolbarColor == -1 || mStatusBarColor == -1 || mPopupHeaderColor == -1) {
             int randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size());
 
             mToolbarColor = ((Constants) getApplication()).TOOLBAR_COLOR.get(randomNumber);
             mStatusBarColor = ((Constants) getApplication()).STATUS_BAR_COLOR.get(randomNumber);
+            mPopupHeaderColor = ((Constants) getApplication()).PUPUP_COLOR.get(randomNumber);
+
             ((Constants) getApplication()).setToolbarColor(mToolbarColor);
             ((Constants) getApplication()).setStatusBarColor(mStatusBarColor);
+            ((Constants) getApplication()).setStatusBarColor(mPopupHeaderColor);
         }
 
         // Set status bar and navigation bar color
