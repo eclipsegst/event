@@ -31,7 +31,7 @@
     <dimen name="popup_label_edit_padding">8dp</dimen>
     <!-- edit text text size -->
     <dimen name="popup_text_size">16dp</dimen>
-    <dimen name="popup_corner_radius">8dp</dimen>
+    <dimen name="popup_corner_radius">4dp</dimen>
 
 
     <!-- cardview -->

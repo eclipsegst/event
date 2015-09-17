@@ -3,6 +3,8 @@ package com.example.android.event;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Point;
@@ -14,6 +16,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -50,6 +53,8 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
     Point p;
     private FrameLayout mFrameLayout;
     private TextView mTextView;
+
+    private Button mDeleteButton;
 
     // specify the columns we need
     // change the indices after those columns if we change the columns
@@ -114,9 +119,11 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
         mLongitudeTextView = (TextView) rootView.findViewById(R.id.longitude_textview);
         mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
 
+        mDeleteButton = (Button) rootView.findViewById(R.id.delete_button);
+
         mToolbar.setTitle("");
         TextView mTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("nota detail");
+        mTitle.setText("detail");
 
 //        (getActivity()).setSupportActionBar(mToolbar);
 
@@ -267,13 +274,21 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
 
         //
         LinearLayout linearLayout = (LinearLayout) layout.findViewById(R.id.header_linear_layout);
-        linearLayout.setBackgroundTintList(getResources().getColorStateList(R.color.green));
+//        linearLayout.setBackgroundTintList(getResources().getColorStateList(R.color.green));
 //        linearLayout.setBackgroundTintList(getResources().getColorStateList(mPopupHeaderColor));
 //        linearLayout.setBackgroundTintMode(PorterDuff.Mode.ADD);
 
         // we can dynamically set the popup window header title
         TextView mTitleView = (TextView)layout.findViewById(R.id.popup_header);
         mTitleView.setText(columnName);
+
+
+        ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{0xffffcc00});
+        mTitleView.setBackgroundTintList(csl);
+
+        int mStatusBarColor = ((Constants) getActivity().getApplication()).getStatusBarColor();
+//        mTitleView.setBackgroundColor(getResources().getColor(mStatusBarColor));
+//        mTitleView.setBackgroundTintList(getActivity().getResources().getColorStateList(mStatusBarColor));
 
 
         // find the edit text field and loading default information
@@ -306,7 +321,7 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
             @Override
             public void onDismiss() {
                 //finish();
-                Toast.makeText(getActivity(), "onDismiss", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "onDismiss", Toast.LENGTH_SHORT).show();
                 mFrameLayout.getForeground().setAlpha(0);
 
             }
@@ -321,7 +336,7 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
 
         // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
         int OFFSET_X = 0;
-        int OFFSET_Y = 80;
+        int OFFSET_Y = 0;
 
         // Clear the default translucent background
 //        popup.setBackgroundDrawable(new BitmapDrawable());
@@ -335,9 +350,11 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
             public void onClick(View v) {
                 popup.dismiss();
                 mFrameLayout.getForeground().setAlpha(0);
-                Toast.makeText(getActivity(), "cancel button clicked", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "cancel button clicked", Toast.LENGTH_LONG).show();
             }
         });
+
+
 
 
         mColumnName = columnName;
@@ -376,8 +393,13 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
                 } else if (mColumnName.contains(NotaEntry.COLUMN_DURATION)) {
 
                     long res = -1L;
-                    res = (long)utilities.convertDurationToSeconds(String.valueOf(mEditView.getText()));
+                    try {
+                        res = utilities.convertDurationToSeconds(String.valueOf(mEditView.getText()));
+                    }catch (Exception e) {
+                        // todo:
+                    }
 
+                    Log.d(LOG_TAG, "zztg2:" + res);
                     if (res != -1L) {
                         mContentValues.put(mColumnName, res);
                     }
@@ -500,7 +522,38 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
 
             // copy first row of cursor to content values
             DatabaseUtils.cursorRowToContentValues(cursor, mContentValues);
+
+            mDeleteButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    getActivity().getContentResolver().delete(
+                            NotaEntry.CONTENT_URI,
+                            NotaEntry.TABLE_NAME + "." + NotaEntry._ID + " = ?",
+                            new String[] {String.valueOf(notaId)}
+                    );
+
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getActivity(), "delete record successfully", Toast.LENGTH_LONG).show();
+                }
+            });
         }
+
+        AppCompatActivity activity = (AppCompatActivity)getActivity();
+        Toolbar toolbarView = (Toolbar) getView().findViewById(R.id.toolbar);
+
+
+        activity.supportStartPostponedEnterTransition();
+
+        if ( null != toolbarView ) {
+            activity.setSupportActionBar(toolbarView);
+
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
     }
 
     @Override

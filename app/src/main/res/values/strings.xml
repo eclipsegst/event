@@ -1,9 +1,9 @@
-<resources>
-    <string name="app_name">event</string>
+<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
+    <string name="app_name">now</string>
     <string name="hello_world">Hello world!</string>
     <string name="welcome_to_event">Welcome to nota!</string>
     <string name="event">event</string>
-    <string name="event_subject">new nota</string>
+    <string name="now_header">just for fun</string>
     <string name="action_settings">settings</string>
     <string name="action_edit">edit</string>
     <string name="action_done">done</string>
@@ -28,4 +28,14 @@
     <string name="title_activity_test">TestActivity</string>
 
     <string name="clear_world">Clear world!</string>
+
+    <!-- Language-specific constants -->
+    <string name="today">Today</string>
+
+    <!-- For labelling tomorrow's forecast [CHAR LIMIT=15] -->
+    <string name="tomorrow">Tomorrow</string>
+
+    <!-- Date format [CHAR LIMIT=NONE] -->
+    <string name="format_full_friendly_date"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="day">%2$s</xliff:g></string>
+
 </resources>

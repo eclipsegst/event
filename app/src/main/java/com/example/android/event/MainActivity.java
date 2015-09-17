@@ -1,5 +1,6 @@
 package com.example.android.event;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,13 +10,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private int mToolbarColor;
     private int mStatusBarColor;
     private int mPopupHeaderColor;
+
+    private ShakeListener mShakeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +41,19 @@ public class MainActivity extends AppCompatActivity {
         mPopupHeaderColor = ((Constants) getApplication()).getPopupHeaderClor();
 
         if (mToolbarColor == -1 || mStatusBarColor == -1 || mPopupHeaderColor == -1) {
-            int randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size());
+            int randomNumber = -1;
+            randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size());
 
-            mToolbarColor = ((Constants) getApplication()).TOOLBAR_COLOR.get(randomNumber);
-            mStatusBarColor = ((Constants) getApplication()).STATUS_BAR_COLOR.get(randomNumber);
-            mPopupHeaderColor = ((Constants) getApplication()).PUPUP_COLOR.get(randomNumber);
+            if (randomNumber != -1) {
+                mToolbarColor = ((Constants) getApplication()).TOOLBAR_COLOR.get(randomNumber);
+                mStatusBarColor = ((Constants) getApplication()).STATUS_BAR_COLOR.get(randomNumber);
+                mPopupHeaderColor = ((Constants) getApplication()).PUPUP_COLOR.get(randomNumber);
+
+            } else {
+                mToolbarColor = -1;
+                mStatusBarColor = -1;
+                mPopupHeaderColor = -1;
+            }
 
             ((Constants) getApplication()).setToolbarColor(mToolbarColor);
             ((Constants) getApplication()).setStatusBarColor(mStatusBarColor);
@@ -96,12 +111,49 @@ public class MainActivity extends AppCompatActivity {
 
         mFabNew.setBackgroundDrawable(new BitmapDrawable(bg));
 
+        mShakeListener = new ShakeListener(this);
+        mShakeListener.setOnShakeListener(new ShakeListener.OnShakeListener() {
+            public void onShake() {
+//                Toast.makeText(MainActivity.this, "Shake ", Toast.LENGTH_LONG).show();
+//                Toast toast = Toast.makeText(MainActivity.this, "Life is full of different colors. It's about about now.", Toast.LENGTH_LONG);
+//                View view = toast.getView();
+//                view.setBackgroundColor(getResources().getColor(mToolbarColor));
+//
+//                toast.setDuration(Toast.LENGTH_LONG);
+//                toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+//
+////                LayoutInflater inflater = (LayoutInflater) getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+////                View view = inflater.inflate(R.layout.about, null);
+////                toast.setView(view);
+//                toast.show();
+//
+////                TextView text = (TextView) view.findViewById(android.R.id.message);
+////                toast.show();
+
+                Context context = getApplicationContext();
+                LayoutInflater inflater = getLayoutInflater();
+
+                View toastRoot = inflater.inflate(R.layout.about, null);
+//                toastRoot.setBackgroundColor(getResources().getColor(mToolbarColor));
+
+                CardView cardView = (CardView)toastRoot.findViewById(R.id.cardview);
+                cardView.setBackgroundColor(getResources().getColor(mToolbarColor));
+                Toast toast = new Toast(context);
+
+                toast.setView(toastRoot);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
+                        0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

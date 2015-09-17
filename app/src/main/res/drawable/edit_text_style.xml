@@ -26,7 +26,7 @@
             <!-- boarder -->
             <stroke
                 android:width="0.7dp"
-                android:color="#FFFFFF"
+                android:color="@color/teal"
                 />
             <corners
                 android:radius="4dp" />

@@ -6,22 +6,14 @@
     tools:context="com.example.android.event.EventActivityFragment">
 
     <TextView
-        android:id="@+id/event_subject"
-        android:text="@string/event_subject"
+        android:id="@+id/now_header_textview"
+        android:text="@string/now_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
-        android:textSize="38dp"/>
-
-    <com.example.android.event.PausableChronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/event_subject"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="71dp"
-        android:textSize="38dp"/>
+        android:textSize="38dp"
+        android:layout_marginBottom="66dp"
+        android:layout_above="@+id/chronometer"
+        android:layout_centerHorizontal="true" />
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,25 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/latitude_text"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/longitude_text"
-            android:layout_below="@+id/latitude_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp" />
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout">
 
     </RelativeLayout>
 
@@ -112,5 +87,45 @@
             android:duplicateParentState="true"/>
 
     </com.example.android.event.FloatingActionButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/longitude_text"
+        android:layout_marginTop="50dp"
+        android:text="where"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/latitude_text"
+        android:text="where"
+        android:layout_alignStart="@+id/longitude_text"
+        android:layout_below="@+id/longitude_text"
+        android:visibility="gone"/>
+
+    <com.example.android.event.PausableChronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/remember"
+        android:text="remember this moment"
+        android:layout_above="@+id/fab_pause"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/chronometer"/>
 
 </RelativeLayout>

@@ -42,6 +42,7 @@ public class Constants extends Application{
     static {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
+        map.put(-1, R.color.teal);
         map.put(0, R.color.red);
         map.put(1, R.color.pink);
         map.put(2, R.color.purple);
@@ -68,6 +69,7 @@ public class Constants extends Application{
     static {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
+        map.put(-1, R.color.medium_teal);
         map.put(0, R.color.medium_red);
         map.put(1, R.color.medium_pink);
         map.put(2, R.color.medium_purple);
@@ -94,6 +96,7 @@ public class Constants extends Application{
     static {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
+        map.put(-1, R.color.dark_teal);
         map.put(0, R.color.dark_red);
         map.put(1, R.color.dark_pink);
         map.put(2, R.color.dark_purple);

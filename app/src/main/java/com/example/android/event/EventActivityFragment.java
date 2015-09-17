@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +50,8 @@ public class EventActivityFragment extends Fragment implements
     protected TextView mLatTextView;
     protected TextView mLonTextView;
 
+    protected TextView mNowHeaderTextView;
+
     public EventActivityFragment() {
     }
 
@@ -58,6 +62,7 @@ public class EventActivityFragment extends Fragment implements
         // inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_event, container, false);
 
+        mNowHeaderTextView = (TextView) rootView.findViewById(R.id.now_header_textview);
         mChronometer = (PausableChronometer) rootView.findViewById(R.id.chronometer);
 
         mFabStart = (FloatingActionButton) rootView.findViewById(R.id.fab_start);
@@ -151,6 +156,22 @@ public class EventActivityFragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
+        int mStatusBarColor = ((Constants) getActivity().getApplication()).getStatusBarColor();
+
+        mNowHeaderTextView.setTextColor(getResources().getColor(mStatusBarColor));
+
+//        AppCompatActivity activity = (AppCompatActivity)getActivity();
+//        Toolbar toolbarView = (Toolbar) getView().findViewById(R.id.toolbar);
+//
+//
+//        activity.supportStartPostponedEnterTransition();
+//
+//        if ( null != toolbarView ) {
+//            activity.setSupportActionBar(toolbarView);
+//
+//            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        }
     }
 
 

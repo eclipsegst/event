@@ -29,7 +29,8 @@
             android:name=".EventActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_event"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
         </activity>
 
         <provider
@@ -42,16 +43,8 @@
             android:name=".NotaActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_nota"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

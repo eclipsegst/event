@@ -54,6 +54,7 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
         public final TextView mEndView;
         public final TextView mCategoryView;
         public final LinearLayout mCardViewHeaderLinearLayout;
+        public final TextView mPostTimeView;
 
         public NotaAdapterViewHolder(View view) {
             super(view);
@@ -64,6 +65,9 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
             mEndView = (TextView) view.findViewById(R.id.list_item_end);
             mCategoryView = (TextView) view.findViewById(R.id.list_item_category);
             mCardViewHeaderLinearLayout = (LinearLayout) view.findViewById(R.id.cardview_item_header_linear_layout);
+
+            mPostTimeView = (TextView) view.findViewById(R.id.list_item_post_time);
+
         }
 
         @Override
@@ -140,8 +144,8 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
         viewHolder.mNoteView.setText(note);
 
         // read start from cursor
-        long startDate = mCursor.getLong(MainActivityFragment.COL_START);
-        String start = utilities.getReadableDate(startDate, utilities.dateFormat);
+        long startDateInMillis = mCursor.getLong(MainActivityFragment.COL_START);
+        String start = utilities.getReadableDate(startDateInMillis, utilities.dateFormat);
         viewHolder.mStartView.setText(start);
 
         // read end from cursor
@@ -157,6 +161,7 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
         String category = mCursor.getString(MainActivityFragment.COL_CATEGORY_NAME);
         viewHolder.mCategoryView.setText(category);
 
+        viewHolder.mPostTimeView.setText(utilities.getFriendlyDayString(mContext, startDateInMillis));
 
         viewHolder.mCardViewHeaderLinearLayout.setBackgroundColor(mPopupHeaderColor);
 
