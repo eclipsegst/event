@@ -509,7 +509,7 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
             mEndTextView.setText(utilities.getReadableDate(endTime));
 
             long duration = cursor.getLong(COL_DURATION);
-            mDurationTextView.setText(utilities.formatDuration(duration));
+            mDurationTextView.setText(utilities.convertToReadableDuration(duration));
 
             String category = cursor.getString(COL_CATEGORY_NAME);
             mCategoryTextView.setText(category);

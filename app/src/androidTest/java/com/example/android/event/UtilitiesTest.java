@@ -20,7 +20,7 @@ public class UtilitiesTest extends AndroidTestCase {
         try {
             result = utilities.convertStringToMilliseconds(TEST_STRING, dateFormat);
 
-        } catch (ParseException pe) {
+        } catch (Exception pe) {
 
         }
 

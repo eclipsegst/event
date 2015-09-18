@@ -155,7 +155,7 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
 
         // read duration from cursor
         long duration = mCursor.getLong(MainActivityFragment.COL_DURATION);
-        viewHolder.mDurationView.setText("" + utilities.formatDuration(duration));
+        viewHolder.mDurationView.setText("" + utilities.convertToReadableDuration(duration));
 
         // read category from cursor
         String category = mCursor.getString(MainActivityFragment.COL_CATEGORY_NAME);

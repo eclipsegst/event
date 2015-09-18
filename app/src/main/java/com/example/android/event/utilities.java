@@ -1,5 +1,8 @@
 package com.example.android.event;
 
+import android.content.Context;
+import android.text.format.Time;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,25 +10,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import android.content.Context;
-import android.text.format.Time;
-
-
-
 
 public class utilities {
 
+    // Format used for storing dates in the database.  ALso used for converting those strings
+    // back into date objects for comparison/processing.
+    public static final String DATE_FORMAT = "yyyyMMdd";
     public static String dateFormat = "MM/dd/yy HH:mm:ss";
     public static String timeFormat = "HH:mm:ss";
 
     /**
      * Return date in specified format.
+     *
      * @param milliSeconds Date in milliseconds
-     * @param dateFormat Date format
+     * @param dateFormat   Date format
      * @return String representing date in specified format
      */
-    public static String getReadableDate(long milliSeconds, String dateFormat)
-    {
+    public static String getReadableDate(long milliSeconds, String dateFormat) {
         // Create a DateFormatter object for displaying date in specified format.
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
 
@@ -35,8 +36,7 @@ public class utilities {
         return formatter.format(calendar.getTime());
     }
 
-    public static String getReadableDate(long milliSeconds)
-    {
+    public static String getReadableDate(long milliSeconds) {
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
 
         // Create a calendar object that will convert the date and time value in milliseconds to date.
@@ -45,90 +45,39 @@ public class utilities {
         return formatter.format(calendar.getTime());
     }
 
-    public static String formatDuration(long startTime) {
+    public static String convertToReadableDuration(long duration) {
 
         String res = "";
-        long diff = startTime;
 
-        long diffHours = diff / (60 * 60);
+        long hours = 0;
+        hours = duration / (60 * 60);
 
-        if (diffHours > 0) {
-            diff = diff - 3600 * diffHours;
+        if (hours > 0) {
+            duration = duration - 3600 * hours;
         }
 
-        long diffMinutes = diff / 60;
+        long minutes = 0;
+        minutes = duration / 60;
 
-        if (diffMinutes > 0) {
-            diff = diff - 60 * diffMinutes;
+        if (minutes > 0) {
+            duration = duration - 60 * minutes;
         }
 
-        long seonds = diff;
+        long seconds = 0;
+        seconds = duration;
 
-
-
-        res += diffHours +":" + diffMinutes + ":" + seonds;
+        res += duationPadding(hours) + ":" + duationPadding(minutes) + ":" + duationPadding(seconds);
         return res;
     }
 
+    public static String duationPadding(long num) {
+        if (String.valueOf(num).length() < 2) {
+            return "0" + num;
+        }
 
-    public static String formatDuration2(long duration) {
-        String res = "";
-
-        res = "" + duration;
-//        long h = 0;
-//        long m = 0;
-//        long s = 0;
-//        while (duration > 0) {
-//            if (duration / 3600 > 0) {
-//                h = (long) (duration / 3600);
-//                duration = duration % 3600;
-//            } else if (duration / 60 > 0) {
-//                m = (long) duration / 60;
-//                duration = duration - duration % 60;
-//            } else {
-//                s = (long) duration;
-//                if (duration < 60) break;
-//            }
-//        }
-
-//        if (h > 0) {
-//            if (String.valueOf(h).length() == 1) {
-//                res += "0" + h;
-//            } else {
-//                res += h;
-//            }
-//            res += ":";
-//
-//        } else {
-//            res += "00:";
-//        }
-//
-//        if (m > 0) {
-//            if (String.valueOf(m).length() == 1) {
-//                res += "0" + m;
-//            } else {
-//                res += m;
-//            }
-//            res += ":";
-//
-//        } else {
-//            res += "00:";
-//        }
-//
-//        if (s > 0) {
-//            if (String.valueOf(s).length() == 1) {
-//                res += "0" + s;
-//            } else {
-//                res += s;
-//            }
-//
-//        } else {
-//            res += "00";
-//        }
-
-
-        return res;
+        return "num";
     }
+
 
     public static int randInt(int min, int max) {
 
@@ -159,8 +108,6 @@ public class utilities {
 
         return result;
     }
-
-
 
     public static long convertStringToMilliseconds(String str) {
 
@@ -197,21 +144,16 @@ public class utilities {
         return res;
     }
 
-
     static String formatDate(long dateInMilliseconds) {
         Date date = new Date(dateInMilliseconds);
         return DateFormat.getDateInstance().format(date);
     }
 
-    // Format used for storing dates in the database.  ALso used for converting those strings
-    // back into date objects for comparison/processing.
-    public static final String DATE_FORMAT = "yyyyMMdd";
-
     /**
      * Helper method to convert the database representation of the date into something to display
      * to users.  As classy and polished a user experience as "20140102" is, we can do better.
      *
-     * @param context Context to use for resource localization
+     * @param context      Context to use for resource localization
      * @param dateInMillis The date in milliseconds
      * @return a user-friendly representation of the date.
      */
@@ -238,16 +180,16 @@ public class utilities {
 //                    today,
 //                    getFormattedMonthDay(context, dateInMillis)));
             return today;
-        } else if ( julianDay > currentJulianDay - 7 ) {
+        } else if (julianDay > currentJulianDay - 7) {
             // If the input date is less than a week in the future, just return the day name.
             return getDayName(context, dateInMillis);
-        } else if(julianDay <= currentJulianDay - 7) {
+        } else if (julianDay <= currentJulianDay - 7) {
             SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("MMM dd");
-            return  shortenedDateFormat.format(dateInMillis);
+            return shortenedDateFormat.format(dateInMillis);
         } else {
             // Otherwise, use the form "Mon Jun 3"
             SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
-            return  shortenedDateFormat.format(dateInMillis);
+            return shortenedDateFormat.format(dateInMillis);
         }
     }
 
@@ -255,7 +197,7 @@ public class utilities {
      * Given a day, returns just the name to use for that day.
      * E.g "today", "tomorrow", "wednesday".
      *
-     * @param context Context to use for resource localization
+     * @param context      Context to use for resource localization
      * @param dateInMillis The date in milliseconds
      * @return
      */
@@ -269,7 +211,7 @@ public class utilities {
         int currentJulianDay = Time.getJulianDay(System.currentTimeMillis(), t.gmtoff);
         if (julianDay == currentJulianDay) {
             return context.getString(R.string.today);
-        } else if ( julianDay == currentJulianDay +1 ) {
+        } else if (julianDay == currentJulianDay + 1) {
             return context.getString(R.string.tomorrow);
         } else {
             Time time = new Time();
@@ -282,12 +224,13 @@ public class utilities {
 
     /**
      * Converts db date format to the format "Month day", e.g "June 24".
-     * @param context Context to use for resource localization
+     *
+     * @param context      Context to use for resource localization
      * @param dateInMillis The db formatted date string, expected to be of the form specified
-     *                in Utility.DATE_FORMAT
+     *                     in Utility.DATE_FORMAT
      * @return The day in the form of a string formatted "December 6"
      */
-    public static String getFormattedMonthDay(Context context, long dateInMillis ) {
+    public static String getFormattedMonthDay(Context context, long dateInMillis) {
         Time time = new Time();
         time.setToNow();
         SimpleDateFormat dbDateFormat = new SimpleDateFormat(utilities.DATE_FORMAT);
