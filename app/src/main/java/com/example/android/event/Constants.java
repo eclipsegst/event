@@ -42,7 +42,6 @@ public class Constants extends Application{
     static {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
-        map.put(-1, R.color.teal);
         map.put(0, R.color.red);
         map.put(1, R.color.pink);
         map.put(2, R.color.purple);
@@ -54,8 +53,8 @@ public class Constants extends Application{
         map.put(8, R.color.green);
         map.put(9, R.color.light_green);
         map.put(10, R.color.lime);
-//        map.put(11, R.color.yellow);
-//        map.put(12, R.color.amber);
+        map.put(11, R.color.teal);
+        map.put(12, R.color.purple);
         map.put(13, R.color.orange);
         map.put(14, R.color.deep_orange);
         map.put(15, R.color.brown);
@@ -69,7 +68,6 @@ public class Constants extends Application{
     static {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
-        map.put(-1, R.color.medium_teal);
         map.put(0, R.color.medium_red);
         map.put(1, R.color.medium_pink);
         map.put(2, R.color.medium_purple);
@@ -81,8 +79,8 @@ public class Constants extends Application{
         map.put(8, R.color.medium_green);
         map.put(9, R.color.medium_light_green);
         map.put(10, R.color.medium_lime);
-//        map.put(11, R.color.medium_yellow);
-//        map.put(12, R.color.medium_amber);
+        map.put(11, R.color.medium_teal);
+        map.put(12, R.color.medium_purple);
         map.put(13, R.color.medium_orange);
         map.put(14, R.color.medium_deep_orange);
         map.put(15, R.color.medium_brown);
@@ -96,7 +94,6 @@ public class Constants extends Application{
     static {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
-        map.put(-1, R.color.dark_teal);
         map.put(0, R.color.dark_red);
         map.put(1, R.color.dark_pink);
         map.put(2, R.color.dark_purple);
@@ -108,8 +105,8 @@ public class Constants extends Application{
         map.put(8, R.color.dark_green);
         map.put(9, R.color.dark_light_green);
         map.put(10, R.color.dark_lime);
-//        map.put(11, R.color.dark_yellow);
-//        map.put(12, R.color.dark_amber);
+        map.put(11, R.color.dark_teal);
+        map.put(12, R.color.dark_purple);
         map.put(13, R.color.dark_orange);
         map.put(14, R.color.dark_deep_orange);
         map.put(15, R.color.dark_brown);

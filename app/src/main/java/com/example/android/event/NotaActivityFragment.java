@@ -544,16 +544,27 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
 
                 @Override
                 public void onClick(View v) {
+                    Toast toast = Toast.makeText(getActivity(), "long press delete button to delete", Toast.LENGTH_LONG);
+                    toast.getView().setBackground(getResources().getDrawable(R.drawable.toast_style));
+                    toast.show();
+                }
+            });
 
+            mDeleteButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
                     getActivity().getContentResolver().delete(
                             NotaEntry.CONTENT_URI,
                             NotaEntry.TABLE_NAME + "." + NotaEntry._ID + " = ?",
-                            new String[] {String.valueOf(notaId)}
+                            new String[]{String.valueOf(notaId)}
                     );
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
-                    Toast.makeText(getActivity(), "delete record successfully", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(getActivity(), "delete record successfully", Toast.LENGTH_LONG);
+                    toast.getView().setBackground(getResources().getDrawable(R.drawable.toast_style));
+                    toast.show();
+                    return true;
                 }
             });
         }

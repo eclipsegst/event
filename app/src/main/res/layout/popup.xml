@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/round_corner_headline"
-        android:backgroundTint="@color/teal">
+        android:backgroundTint="@color/medium_yellow">
 
         <TextView
             android:id="@+id/popup_header"
@@ -94,7 +94,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textAllCaps="false"
             android:background="@drawable/save_button_style"
-            android:backgroundTint="@color/teal"/>
+            android:backgroundTint="@color/medium_yellow"/>
     </LinearLayout>
 
 </LinearLayout>

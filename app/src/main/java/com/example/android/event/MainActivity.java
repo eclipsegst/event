@@ -40,20 +40,29 @@ public class MainActivity extends AppCompatActivity {
         mStatusBarColor = ((Constants) getApplication()).getStatusBarColor();
         mPopupHeaderColor = ((Constants) getApplication()).getPopupHeaderClor();
 
-        if (mToolbarColor == -1 || mStatusBarColor == -1) {
+        if (mToolbarColor == -1 || mStatusBarColor == -1 || mPopupHeaderColor == -1) {
             int randomNumber = -1;
-            randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size());
+            try {
+                randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size());
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "cannot generate random number");
+            }
 
             if (randomNumber != -1) {
+                Log.d(LOG_TAG, "randomNumber:" + randomNumber);
                 mToolbarColor = ((Constants) getApplication()).TOOLBAR_COLOR.get(randomNumber);
                 mStatusBarColor = ((Constants) getApplication()).STATUS_BAR_COLOR.get(randomNumber);
                 mPopupHeaderColor = ((Constants) getApplication()).PUPUP_COLOR.get(randomNumber);
 
             } else {
-                mToolbarColor = -1;
-                mStatusBarColor = -1;
-                mPopupHeaderColor = -1;
+                mToolbarColor = ((Constants) getApplication()).TOOLBAR_COLOR.get(7);
+                mStatusBarColor = ((Constants) getApplication()).STATUS_BAR_COLOR.get(7);
+                mPopupHeaderColor = ((Constants) getApplication()).PUPUP_COLOR.get(7);
             }
+
+            Log.d(LOG_TAG, "mToolbarColor:" + mToolbarColor);
+            Log.d(LOG_TAG, "mStatusBarColor:" + mStatusBarColor);
+            Log.d(LOG_TAG, "mPopupHeaderColor:" + mPopupHeaderColor);
 
             ((Constants) getApplication()).setToolbarColor(mToolbarColor);
             ((Constants) getApplication()).setStatusBarColor(mStatusBarColor);
@@ -76,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         TextView mTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("now");
         setSupportActionBar(mToolbar);
-
 
         FloatingActionButton mFabNew = (FloatingActionButton) findViewById(R.id.fab_new);
         Drawable mBackground = (Drawable) getResources().getDrawable(R.drawable.fab_background);
