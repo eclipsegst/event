@@ -354,9 +354,6 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
             }
         });
 
-
-
-
         mColumnName = columnName;
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -375,20 +372,34 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
                 } else if (mColumnName.contains(NotaEntry.COLUMN_START) ||
                         mColumnName.contains(NotaEntry.COLUMN_END)) {
                     long updateValue = utilities.convertStringToMilliseconds(String.valueOf(mEditView.getText()));
-                    if (updateValue != 1L) {
+                    if (updateValue != -1L && updateValue != -1) {
+                        Log.d(LOG_TAG, "update values:" + updateValue);
                         mContentValues.put(mColumnName, updateValue);
                     } else {
-                        // todo: handle incorrect format
+                        Toast toast = Toast.makeText(getActivity(), "Sorry, update failed. Please follow format 'mm/dd/yy hh:mm:ss'.", Toast.LENGTH_LONG);
+                        toast.getView().setBackground(getResources().getDrawable(R.drawable.toast_style));
+                        toast.show();
                     }
                 } else if (mColumnName.contains(NotaEntry.COLUMN_LAT) ||
                         mColumnName.contains(NotaEntry.COLUMN_LON)) {
                     String str;
                     str = String.valueOf(mEditView.getText());
                     if (!str.isEmpty() && str != null) {
-                        double updateValues = Double.parseDouble(str);
-                        mContentValues.put(mColumnName, updateValues);
+
+                        double updateValues = -1;
+                        try {
+                            updateValues = Double.parseDouble(str);
+                            mContentValues.put(mColumnName, updateValues);
+                        } catch (Exception e) {
+                            Toast toast = Toast.makeText(getActivity(), "Sorry, update failed. Please input number only.", Toast.LENGTH_LONG);
+                            toast.getView().setBackground(getResources().getDrawable(R.drawable.toast_style));
+                            toast.show();
+                        }
+
                     } else {
-                        // todo: handle empty string
+                        Toast toast = Toast.makeText(getActivity(), "Sorry, update failed. Please input number only.", Toast.LENGTH_LONG);
+                        toast.getView().setBackground(getResources().getDrawable(R.drawable.toast_style));
+                        toast.show();
                     }
                 } else if (mColumnName.contains(NotaEntry.COLUMN_DURATION)) {
 
@@ -396,12 +407,18 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
                     try {
                         res = utilities.convertDurationToSeconds(String.valueOf(mEditView.getText()));
                     }catch (Exception e) {
-                        // todo:
+                        Toast toast = Toast.makeText(getActivity(), "Sorry, update failed. Please follow format 'hh:mm:ss'.", Toast.LENGTH_LONG);
+                        toast.getView().setBackground(getResources().getDrawable(R.drawable.toast_style));
+                        toast.show();
                     }
 
                     Log.d(LOG_TAG, "zztg2:" + res);
                     if (res != -1L) {
                         mContentValues.put(mColumnName, res);
+                    } else {
+                        Toast toast = Toast.makeText(getActivity(), "Sorry, update failed. Please follow format 'hh:mm:ss'.", Toast.LENGTH_LONG);
+                        toast.getView().setBackground(getResources().getDrawable(R.drawable.toast_style));
+                        toast.show();
                     }
                 }
 

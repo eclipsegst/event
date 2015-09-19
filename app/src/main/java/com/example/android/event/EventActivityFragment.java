@@ -215,8 +215,8 @@ public class EventActivityFragment extends Fragment implements
 
                 ContentValues newNotaValues = new ContentValues();
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_CAT_KEY, categoryRowId);
-                newNotaValues.put(NotaContract.NotaEntry.COLUMN_SUBJECT, "default subject");
-                newNotaValues.put(NotaContract.NotaEntry.COLUMN_NOTE, "default note");
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_SUBJECT, "");
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_NOTE, "");
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_START, mStartTime);
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_END, mEndTime);
                 newNotaValues.put(NotaContract.NotaEntry.COLUMN_DURATION, mDuration);

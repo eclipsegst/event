@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mStatusBarColor = ((Constants) getApplication()).getStatusBarColor();
         mPopupHeaderColor = ((Constants) getApplication()).getPopupHeaderClor();
 
-        if (mToolbarColor == -1 || mStatusBarColor == -1 || mPopupHeaderColor == -1) {
+        if (mToolbarColor == -1 || mStatusBarColor == -1) {
             int randomNumber = -1;
             randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size());
 
@@ -111,42 +111,27 @@ public class MainActivity extends AppCompatActivity {
 
         mFabNew.setBackgroundDrawable(new BitmapDrawable(bg));
 
-        mShakeListener = new ShakeListener(this);
-        mShakeListener.setOnShakeListener(new ShakeListener.OnShakeListener() {
-            public void onShake() {
-//                Toast.makeText(MainActivity.this, "Shake ", Toast.LENGTH_LONG).show();
-//                Toast toast = Toast.makeText(MainActivity.this, "Life is full of different colors. It's about about now.", Toast.LENGTH_LONG);
-//                View view = toast.getView();
-//                view.setBackgroundColor(getResources().getColor(mToolbarColor));
+//        mShakeListener = new ShakeListener(this);
+//        mShakeListener.setOnShakeListener(new ShakeListener.OnShakeListener() {
+//            public void onShake() {
 //
+//                Context context = getApplicationContext();
+//                LayoutInflater inflater = getLayoutInflater();
+//
+//                View toastRoot = inflater.inflate(R.layout.about, null);
+////                toastRoot.setBackgroundColor(getResources().getColor(mToolbarColor));
+//
+//                CardView cardView = (CardView)toastRoot.findViewById(R.id.cardview);
+//                cardView.setBackgroundColor(getResources().getColor(mToolbarColor));
+//                Toast toast = new Toast(context);
+//
+//                toast.setView(toastRoot);
+//                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
+//                        0, 0);
 //                toast.setDuration(Toast.LENGTH_LONG);
-//                toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
-//
-////                LayoutInflater inflater = (LayoutInflater) getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-////                View view = inflater.inflate(R.layout.about, null);
-////                toast.setView(view);
 //                toast.show();
-//
-////                TextView text = (TextView) view.findViewById(android.R.id.message);
-////                toast.show();
-
-                Context context = getApplicationContext();
-                LayoutInflater inflater = getLayoutInflater();
-
-                View toastRoot = inflater.inflate(R.layout.about, null);
-//                toastRoot.setBackgroundColor(getResources().getColor(mToolbarColor));
-
-                CardView cardView = (CardView)toastRoot.findViewById(R.id.cardview);
-                cardView.setBackgroundColor(getResources().getColor(mToolbarColor));
-                Toast toast = new Toast(context);
-
-                toast.setView(toastRoot);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
-                        0, 0);
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.show();
-            }
-        });
+//            }
+//        });
 
     }
 

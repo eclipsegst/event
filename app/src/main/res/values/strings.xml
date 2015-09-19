@@ -14,7 +14,7 @@
     <string name="title_activity_event">EventActivity</string>
     <string name="title_activity_nota">NotaActivity</string>
 
-    <string name="empty_nota_list">No Nota Information Available</string>
+    <string name="empty_nota_list">No Information Available</string>
 
     <!-- nota detail label-->
     <string name="label_subject">subject</string>
