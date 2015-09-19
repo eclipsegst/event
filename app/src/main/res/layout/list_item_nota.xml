@@ -31,8 +31,7 @@
                     android:id="@+id/cardview_item_header_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@color/teal">
+                    android:orientation="horizontal">
                     <TextView
                         android:id="@+id/list_item_post_time"
                         android:layout_width="wrap_content"
@@ -42,7 +41,7 @@
                         android:textSize="20sp"
                         android:text="sep 18"
                         android:layout_margin="@dimen/cardview_header_margin"
-                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textAppearance="?android:textAppearanceMedium"
                         android:layout_gravity="center_vertical|start"/>
 
                     <TextView
@@ -53,11 +52,18 @@
                         android:fontFamily="sans-serif"
                         android:text="category"
                         android:layout_margin="@dimen/cardview_header_margin"
-                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textAppearance="?android:textAppearanceMedium"
                         android:gravity="right"
                         android:textAlignment="gravity"
                         android:visibility="gone"/>
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/divider_view_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:background="@color/black"
+                    android:layout_margin="4dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,9 +74,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
-                        android:gravity="center"
+                        android:gravity="start"
+                        android:text="subject"
                         android:layout_margin="@dimen/cardview_content_view_margin"
-                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textAppearance="?android:textAppearanceSmall"
                         android:textColor="@color/black"/>
                 </LinearLayout>
 
@@ -82,16 +89,59 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/list_item_start_date"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:text="start"
-                            android:fontFamily="sans-serif"
-                            android:layout_margin="@dimen/cardview_content_view_margin"
-                            android:textAppearance="?android:textAppearanceSmall"/>
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/list_item_start_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:gravity="left"
+                                android:text="from:"
+                                android:layout_margin="@dimen/cardview_content_view_margin"
+                                android:textAppearance="?android:textAppearanceSmall" />
+                            <TextView
+                                android:id="@+id/list_item_start_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="start"
+                                android:text="start"
+                                android:fontFamily="sans-serif"
+                                android:layout_margin="@dimen/cardview_content_view_margin"
+                                android:textAppearance="?android:textAppearanceSmall"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/list_item_end_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:gravity="left"
+                                android:text="to:"
+                                android:layout_margin="@dimen/cardview_content_view_margin"
+                                android:textAppearance="?android:textAppearanceSmall" />
+                            <TextView
+                                android:id="@+id/list_item_end"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:gravity="left"
+                                android:text="end"
+                                android:layout_margin="@dimen/cardview_content_view_margin"
+                                android:textAppearance="?android:textAppearanceSmall" />
+
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -100,24 +150,25 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/list_item_end"
+                            android:id="@+id/list_item_duration_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
-                            android:gravity="left"
-                            android:text="end"
-                            android:layout_margin="@dimen/cardview_content_view_margin"
-                            android:textAppearance="?android:textAppearanceSmall" />
-
-                        <TextView
-                            android:id="@+id/list_item_duration"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
+                            android:gravity="start"
                             android:text="duration"
                             android:fontFamily="sans-serif"
                             android:layout_margin="@dimen/cardview_content_view_margin"
-                            android:textAppearance="?android:textAppearanceMedium"/>
+                            android:textAppearance="?android:textAppearanceSmall"/>
+
+                        <TextView
+                            android:id="@+id/list_item_duration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="duration"
+                            android:textColor="@color/black"
+                            android:fontFamily="sans-serif"
+                            android:layout_margin="@dimen/cardview_content_view_margin"
+                            android:textAppearance="?android:textAppearanceSmall"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -129,13 +180,14 @@
                     <TextView
                         android:id="@+id/list_item_note"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="wrap_content"
                         android:padding="4dp"
+                        android:maxLines="3"
                         android:text="note"
                         android:fontFamily="sans-serif"
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_margin="@dimen/cardview_content_view_margin"
-                        android:textAppearance="?android:textAppearanceMedium"/>
+                        android:textAppearance="?android:textAppearanceSmall"/>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>

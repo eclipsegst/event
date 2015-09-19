@@ -102,10 +102,7 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
         mEmptyView = emptyView;
         mICM = new ItemChoiceManager(this);
         mICM.setChoiceMode(choiceMode);
-        mPopupHeaderColor = ((Constants) mContext.getApplicationContext()).getPopupHeaderClor();
-
-
-
+        mPopupHeaderColor = ((Constants) mContext.getApplicationContext()).getPopupHeaderColor();
     }
 
     /**
@@ -163,7 +160,7 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.NotaAdapterVie
 
         viewHolder.mPostTimeView.setText(utilities.getFriendlyDayString(mContext, startDateInMillis));
 
-        viewHolder.mCardViewHeaderLinearLayout.setBackgroundColor(mPopupHeaderColor);
+//        viewHolder.mCardViewHeaderLinearLayout.setBackgroundColor(mPopupHeaderColor);
 
         mICM.onBindViewHolder(viewHolder, position);
     }

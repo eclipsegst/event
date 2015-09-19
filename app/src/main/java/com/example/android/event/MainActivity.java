@@ -1,6 +1,5 @@
 package com.example.android.event;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -10,17 +9,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,12 +33,16 @@ public class MainActivity extends AppCompatActivity {
 
         mToolbarColor = ((Constants) getApplication()).getToolbarColor();
         mStatusBarColor = ((Constants) getApplication()).getStatusBarColor();
-        mPopupHeaderColor = ((Constants) getApplication()).getPopupHeaderClor();
+        mPopupHeaderColor = ((Constants) getApplication()).getPopupHeaderColor();
+
+        Log.d(LOG_TAG, "mToolbarColor:" + mToolbarColor);
+        Log.d(LOG_TAG, "mStatusBarColor:" + mStatusBarColor);
+        Log.d(LOG_TAG, "mPopupHeaderColor:" + mPopupHeaderColor);
 
         if (mToolbarColor == -1 || mStatusBarColor == -1 || mPopupHeaderColor == -1) {
             int randomNumber = -1;
             try {
-                randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size());
+                randomNumber = utilities.randInt(0, ((Constants) getApplication()).TOOLBAR_COLOR.size() - 1);
             } catch (Exception e) {
                 Log.e(LOG_TAG, "cannot generate random number");
             }
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
             ((Constants) getApplication()).setToolbarColor(mToolbarColor);
             ((Constants) getApplication()).setStatusBarColor(mStatusBarColor);
-            ((Constants) getApplication()).setStatusBarColor(mPopupHeaderColor);
+            ((Constants) getApplication()).setPopupHeaderColor(mPopupHeaderColor);
         }
 
         // Set status bar and navigation bar color

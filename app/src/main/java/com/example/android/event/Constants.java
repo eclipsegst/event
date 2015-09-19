@@ -11,14 +11,14 @@ public class Constants extends Application{
 
     private int toolbarColor = -1;
     private int statusBarColor = -1;
-    private int popupHeaderClor = -1;
+    private int popupHeaderColor = -1;
 
-    public int getPopupHeaderClor() {
-        return popupHeaderClor;
+    public int getPopupHeaderColor() {
+        return popupHeaderColor;
     }
 
-    public void setPopupHeaderClor(int popupHeaderClor) {
-        this.popupHeaderClor = popupHeaderClor;
+    public void setPopupHeaderColor(int popupHeaderColor) {
+        this.popupHeaderColor = popupHeaderColor;
     }
 
     public int getToolbarColor() {

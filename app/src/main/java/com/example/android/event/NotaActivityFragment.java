@@ -15,7 +15,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -33,7 +32,6 @@ import android.widget.Toast;
 
 import com.example.android.event.data.NotaContract.CategoryEntry;
 import com.example.android.event.data.NotaContract.NotaEntry;
-import com.example.android.event.data.NotaDbHelper;
 
 import java.util.Arrays;
 
@@ -467,7 +465,7 @@ public class NotaActivityFragment extends Fragment implements LoaderManager.Load
 
         mToolbarColor = ((Constants) getActivity().getApplication()).getToolbarColor();
         mStatusBarColor = ((Constants) getActivity().getApplication()).getStatusBarColor();
-        mPopupHeaderColor = ((Constants) getActivity().getApplication()).getPopupHeaderClor();
+        mPopupHeaderColor = ((Constants) getActivity().getApplication()).getPopupHeaderColor();
 
         if (Build.VERSION.SDK_INT >= 21) {
             // top status bar
