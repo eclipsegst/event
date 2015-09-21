@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/now"
+            android:checked="false"
+            android:title="now"/>
+
+        <item
+            android:id="@+id/mement"
+            android:checked="false"
+            android:title="moment" />
+
+        <item
+            android:id="@+id/category"
+            android:checked="false"
+            android:title="category" />
+        <item
+            android:id="@+id/event"
+            android:checked="false"
+            android:title="event" />
+
+    </group>
+</menu>
