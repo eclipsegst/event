@@ -20,6 +20,10 @@
             android:id="@+id/event"
             android:checked="false"
             android:title="event" />
+        <item
+            android:id="@+id/play"
+            android:checked="false"
+            android:title="Play" />
 
     </group>
 </menu>

@@ -1,6 +1,7 @@
 package com.example.android.event;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -195,6 +196,12 @@ public class MainActivity extends AppCompatActivity {
 //                                    .commit();
 //                        }
 //                        return true;
+
+                     case R.id.play:
+                         Intent intent = new Intent(MainActivity.this, PlayActivity.class);
+                         startActivity(intent);
+                        return true;
+
                     default:
                         Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
                         return true;
