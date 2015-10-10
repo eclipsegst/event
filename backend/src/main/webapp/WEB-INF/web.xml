@@ -15,8 +15,8 @@
             <param-name>services</param-name>
             <param-value>com.zhaolongzhong.backend.MyEndpoint,
                 com.zhaolongzhong.backend.RegistrationEndpoint,
-                com.zhaolongzhong.backend.MessagingEndpoint
-            </param-value>
+                com.zhaolongzhong.backend.MessagingEndpoint,
+                com.zhaolongzhong.backend.MomentEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

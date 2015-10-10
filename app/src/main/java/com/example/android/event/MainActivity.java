@@ -1,6 +1,7 @@
 package com.example.android.event;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -24,6 +26,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.zhaolongzhong.backend.momentApi.MomentApi;
+import com.zhaolongzhong.backend.momentApi.model.Moment;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -248,6 +261,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }
 
+        new MomentAsyncTask(this).execute();
+
     }
 
     @Override
@@ -275,5 +290,55 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class MomentAsyncTask extends AsyncTask<Void, Void, List<Moment>> {
+        private MomentApi myApiService = null;
+        private Context context;
+
+        MomentAsyncTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected List<Moment> doInBackground(Void... params) {
+            if (myApiService == null) {  // Only do this once
+//                MomentApi.Builder builder = new MomentApi.Builder(AndroidHttp.newCompatibleTransport(),
+//                    new AndroidJsonFactory(), null)
+//                    // options for running against local devappserver
+//                    // - 10.0.2.2 is localhost's IP address in Android emulator
+//                    // - turn off compression when running against local devappserver
+//                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+//                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+//                        @Override
+//                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+//                            abstractGoogleClientRequest.setDisableGZipContent(true);
+//                        }
+//                    });
+            // end options for devappserver
+
+                MomentApi.Builder builder = new MomentApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                        .setRootUrl("https://now-livethemoment.appspot.com/_ah/api/");
+
+                myApiService = builder.build();
+            } else {
+                Log.d(LOG_TAG, "myApiService is null");
+            }
+
+            try {
+                return myApiService.list().execute().getItems();
+            } catch (IOException e) {
+                return Collections.EMPTY_LIST;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Moment> result) {
+            Log.d(LOG_TAG, "result size:" + result.size());
+            for (Moment moment : result) {
+                Toast.makeText(context, moment.getSubject() + ", " + moment.getNote(), Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 }
