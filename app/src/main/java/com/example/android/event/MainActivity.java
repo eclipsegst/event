@@ -1,8 +1,11 @@
 package com.example.android.event;
 
 import android.app.FragmentManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -27,6 +30,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.event.data.NotaContract;
+import com.example.android.event.data.NotaDbHelper;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -337,8 +342,91 @@ public class MainActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "result size:" + result.size());
             for (Moment moment : result) {
                 Toast.makeText(context, moment.getSubject() + ", " + moment.getNote(), Toast.LENGTH_LONG).show();
+
+                long categoryRowId = -1;
+                categoryRowId = getCategoryDefaultRowId(this.context);
+
+                ContentValues newNotaValues = new ContentValues();
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_CAT_KEY, categoryRowId);
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_SUBJECT, moment.getSubject());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_NOTE, moment.getNote());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_START, System.currentTimeMillis());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_END, System.currentTimeMillis());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_DURATION, System.currentTimeMillis());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_LAT, moment.getLatitude());
+                newNotaValues.put(NotaContract.NotaEntry.COLUMN_LON, moment.getLongitude());
+
+                long notaRowId = -1;
+
+                notaRowId = insertNewNota(this.context, newNotaValues);
+                Log.d(LOG_TAG, "notaId: " + notaRowId);
+                MainActivityFragment.mNotaAdapter.notifyDataSetChanged();
+                MainActivityFragment.mRecyclerView.setAdapter(MainActivityFragment.mNotaAdapter);
+
             }
 
         }
+    }
+
+    private long insertNewNota(Context context, ContentValues contentValues) {
+        NotaDbHelper dbHelper = new NotaDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        long notaRowId = -1;
+        notaRowId = db.insert(NotaContract.NotaEntry.TABLE_NAME, null, contentValues);
+
+        return notaRowId;
+    }
+
+    static ContentValues createNotaValues(long categoryRowId) {
+
+        ContentValues testValuesNota = new ContentValues();
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_CAT_KEY, categoryRowId);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_SUBJECT, "running");
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_NOTE, "I'm feeling good!");
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_START, 1441822024L);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_END, 1441822024L);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_DURATION, 365);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_LAT, 38.9338);
+        testValuesNota.put(NotaContract.NotaEntry.COLUMN_LON, -92.3183);
+
+        return testValuesNota;
+    }
+
+    private long getCategoryDefaultRowId(Context context) {
+        NotaDbHelper dbHelper = new NotaDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        Cursor cursorCategory = context.getContentResolver().query(
+                NotaContract.CategoryEntry.CONTENT_URI,
+                null, // leaving "columns" null just returns all the columns
+                NotaContract.CategoryEntry.COLUMN_NAME + " = " + "'default'", // columns for "where" clause
+                null, // values for "where" clause
+                null  // sort order
+        );
+
+        long categoryRowId = -1;
+
+        if (cursorCategory.moveToFirst()) {
+            // get the default category row id
+            int columnNameIndex = cursorCategory.getColumnIndex(NotaContract.CategoryEntry._ID);
+            categoryRowId = cursorCategory.getLong(columnNameIndex);
+            Log.d(LOG_TAG, "We have a default category with row id: " + categoryRowId);
+        } else {
+            // create default category
+            ContentValues testValuesCategory = createCategoryValues();
+            categoryRowId = db.insert(NotaContract.CategoryEntry.TABLE_NAME, null, testValuesCategory);
+            Log.d(LOG_TAG, "We don't have a default category. So we create the default category with row id: " + categoryRowId);
+        }
+        return categoryRowId;
+    }
+
+    private ContentValues createCategoryValues() {
+
+        ContentValues testValuesCategory = new ContentValues();
+        testValuesCategory.put(NotaContract.CategoryEntry.COLUMN_NAME, "default");
+        testValuesCategory.put(NotaContract.CategoryEntry.COLUMN_TOTAL_TIME, 0);
+
+        return testValuesCategory;
     }
 }
